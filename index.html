@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Alana — Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=IBM+Plex+Mono:wght@400;500&family=Söhne:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&family=Bebas+Neue&family=Syne:wght@400;700;800&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />
+ 
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+ 
+    :root {
+      --stone: #1a1a14;
+      --moss: #3b4a2f;
+      --sage: #7a9162;
+      --lichen: #b8c9a3;
+      --cream: #f0ede4;
+      --rust: #8c4a2f;
+      --bark: #5c3d1e;
+      --fog: #d6d3ca;
+      --ink: #0d0d0a;
+    }
+ 
+    html { scroll-behavior: smooth; }
+ 
+    body {
+      background-color: var(--cream);
+      color: var(--stone);
+      font-family: 'Lora', Georgia, serif;
+      font-size: 18px;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+ 
+    /* ── TEXTURE OVERLAY ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      opacity: 0.5;
+    }
+ 
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.2rem 3rem;
+      background: var(--cream);
+      border-bottom: 2px solid var(--stone);
+      mix-blend-mode: normal;
+    }
+ 
+    nav .logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.6rem;
+      letter-spacing: 0.08em;
+      color: var(--stone);
+      text-decoration: none;
+    }
+ 
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 2.5rem;
+    }
+ 
+    nav ul a {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.78rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--stone);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.2s;
+    }
+ 
+    nav ul a:hover { border-color: var(--moss); }
+ 
+    /* ── HERO ── */
+    #hero {
+      position: relative;
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border-bottom: 2px solid var(--stone);
+      padding-top: 80px;
+      overflow: hidden;
+    }
+ 
+    .hero-left {
+      padding: 5rem 3rem 4rem 3rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      border-right: 2px solid var(--stone);
+      position: relative;
+      z-index: 1;
+    }
+ 
+    .hero-eyebrow {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--moss);
+      margin-bottom: 1.2rem;
+    }
+ 
+    .hero-name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(5rem, 12vw, 9.5rem);
+      line-height: 0.9;
+      letter-spacing: 0.02em;
+      color: var(--stone);
+      margin-bottom: 2rem;
+    }
+ 
+    .hero-tagline {
+      font-family: 'DM Serif Display', serif;
+      font-style: italic;
+      font-size: 1.25rem;
+      color: var(--moss);
+      max-width: 34ch;
+      line-height: 1.5;
+      margin-bottom: 3rem;
+    }
+ 
+    .hero-ctas {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+ 
+    .btn-primary {
+      display: inline-block;
+      background: var(--stone);
+      color: var(--cream);
+      padding: 0.75rem 2rem;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border: 2px solid var(--stone);
+      transition: background 0.2s, color 0.2s;
+    }
+ 
+    .btn-primary:hover {
+      background: var(--moss);
+      border-color: var(--moss);
+    }
+ 
+    .btn-outline {
+      display: inline-block;
+      background: transparent;
+      color: var(--stone);
+      padding: 0.75rem 2rem;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border: 2px solid var(--stone);
+      transition: background 0.2s, color 0.2s;
+    }
+ 
+    .btn-outline:hover {
+      background: var(--stone);
+      color: var(--cream);
+    }
+ 
+    .hero-right {
+      position: relative;
+      background: var(--moss);
+      overflow: hidden;
+      display: flex;
+      align-items: flex-end;
+      justify-content: flex-start;
+      padding: 3rem;
+    }
+ 
+    /* Decorative botanical SVG fills */
+    .hero-right::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 80% at 70% 30%, rgba(90,120,60,0.35) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 60% at 20% 80%, rgba(30,50,20,0.4) 0%, transparent 60%);
+    }
+ 
+    .hero-stats {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+ 
+    .hero-stat {
+      border-left: 3px solid var(--lichen);
+      padding-left: 1rem;
+    }
+ 
+    .hero-stat-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.8rem;
+      color: var(--cream);
+      line-height: 1;
+    }
+ 
+    .hero-stat-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--lichen);
+    }
+ 
+    /* Plant decoration */
+    .plant-deco {
+      position: absolute;
+      right: -20px;
+      top: -10px;
+      width: 340px;
+      opacity: 0.18;
+    }
+ 
+    /* ── SECTION SHARED ── */
+    section {
+      position: relative;
+      z-index: 1;
+    }
+ 
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+      border-bottom: 2px solid var(--stone);
+      padding-bottom: 1rem;
+    }
+ 
+    .section-num {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
+      color: var(--sage);
+    }
+ 
+    .section-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 3.5rem;
+      letter-spacing: 0.04em;
+      color: var(--stone);
+      line-height: 1;
+    }
+ 
+    /* ── ABOUT ── */
+    #about {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border-bottom: 2px solid var(--stone);
+    }
+ 
+    .about-left {
+      padding: 5rem 3rem;
+      border-right: 2px solid var(--stone);
+    }
+ 
+    .about-body {
+      font-size: 1.05rem;
+      color: var(--stone);
+      max-width: 48ch;
+    }
+ 
+    .about-body p + p { margin-top: 1.2rem; }
+ 
+    .about-right {
+      padding: 5rem 3rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+ 
+    .skills-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      border: 2px solid var(--stone);
+    }
+ 
+    .skill-tag {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      padding: 0.7rem 1rem;
+      border-right: 1px solid var(--stone);
+      border-bottom: 1px solid var(--stone);
+      color: var(--stone);
+    }
+ 
+    .skill-tag:nth-child(even) { border-right: none; }
+ 
+    /* ── PROJECTS ── */
+    #projects {
+      padding: 5rem 3rem;
+      border-bottom: 2px solid var(--stone);
+    }
+ 
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 0;
+      border: 2px solid var(--stone);
+    }
+ 
+    .project-card {
+      padding: 2rem;
+      border-right: 2px solid var(--stone);
+      border-bottom: 2px solid var(--stone);
+      position: relative;
+      overflow: hidden;
+      transition: background 0.25s;
+    }
+ 
+    .project-card:hover { background: var(--fog); }
+ 
+    .project-card:last-child,
+    .project-card:nth-child(3n) { border-right: none; }
+ 
+    .project-card::before {
+      content: attr(data-num);
+      position: absolute;
+      top: 1.2rem; right: 1.5rem;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 4rem;
+      color: var(--lichen);
+      line-height: 1;
+    }
+ 
+    .project-tag {
+      display: inline-block;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      background: var(--moss);
+      color: var(--cream);
+      padding: 0.25rem 0.6rem;
+      margin-bottom: 1rem;
+    }
+ 
+    .project-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.4rem;
+      color: var(--stone);
+      margin-bottom: 0.7rem;
+      max-width: 24ch;
+    }
+ 
+    .project-desc {
+      font-size: 0.9rem;
+      color: var(--moss);
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+    }
+ 
+    .project-link {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--rust);
+      text-decoration: none;
+      border-bottom: 1px solid currentColor;
+    }
+ 
+    /* ── EXPERIENCE ── */
+    #experience {
+      padding: 5rem 3rem;
+      border-bottom: 2px solid var(--stone);
+      background: var(--stone);
+    }
+ 
+    #experience .section-title { color: var(--cream); }
+    #experience .section-num { color: var(--sage); }
+    #experience .section-header { border-bottom-color: var(--moss); }
+ 
+    .timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+ 
+    .timeline-item {
+      display: grid;
+      grid-template-columns: 180px 1fr;
+      border-top: 1px solid var(--moss);
+      padding: 2.5rem 0;
+      gap: 3rem;
+      align-items: start;
+    }
+ 
+    .timeline-date {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      color: var(--sage);
+      padding-top: 0.2rem;
+    }
+ 
+    .timeline-content {
+      position: relative;
+    }
+ 
+    .timeline-role {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.3rem;
+      color: var(--cream);
+      margin-bottom: 0.3rem;
+    }
+ 
+    .timeline-org {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.78rem;
+      letter-spacing: 0.08em;
+      color: var(--lichen);
+      margin-bottom: 0.8rem;
+    }
+ 
+    .timeline-desc {
+      font-size: 0.92rem;
+      color: var(--fog);
+      line-height: 1.65;
+      max-width: 58ch;
+    }
+ 
+    .resume-cta {
+      margin-top: 3rem;
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      border-top: 1px solid var(--moss);
+      padding-top: 2.5rem;
+    }
+ 
+    .resume-cta p {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.78rem;
+      letter-spacing: 0.1em;
+      color: var(--lichen);
+      text-transform: uppercase;
+    }
+ 
+    .btn-resume {
+      display: inline-block;
+      border: 2px solid var(--cream);
+      color: var(--cream);
+      padding: 0.75rem 2rem;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: background 0.2s, color 0.2s;
+      flex-shrink: 0;
+    }
+ 
+    .btn-resume:hover {
+      background: var(--cream);
+      color: var(--stone);
+    }
+ 
+    /* ── CONTACT ── */
+    #contact {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+ 
+    .contact-left {
+      padding: 5rem 3rem;
+      border-right: 2px solid var(--stone);
+    }
+ 
+    .contact-intro {
+      font-family: 'DM Serif Display', serif;
+      font-style: italic;
+      font-size: 1.6rem;
+      color: var(--moss);
+      line-height: 1.4;
+      margin-bottom: 2.5rem;
+      max-width: 28ch;
+    }
+ 
+    .contact-links {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      border: 2px solid var(--stone);
+    }
+ 
+    .contact-link-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 1.2rem;
+      border-bottom: 1px solid var(--stone);
+      text-decoration: none;
+      color: var(--stone);
+      transition: background 0.2s;
+    }
+ 
+    .contact-link-row:last-child { border-bottom: none; }
+    .contact-link-row:hover { background: var(--fog); }
+ 
+    .contact-link-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--sage);
+    }
+ 
+    .contact-link-value {
+      font-family: 'Lora', serif;
+      font-size: 0.92rem;
+      color: var(--stone);
+    }
+ 
+    .contact-right {
+      padding: 5rem 3rem;
+      background: var(--moss);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+ 
+    .contact-right .big-text {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(3rem, 7vw, 6rem);
+      color: var(--cream);
+      line-height: 0.95;
+      letter-spacing: 0.03em;
+      opacity: 0.18;
+      margin-bottom: 2rem;
+    }
+ 
+    .contact-note {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      color: var(--lichen);
+      line-height: 1.8;
+    }
+ 
+    /* ── FOOTER ── */
+    footer {
+      background: var(--ink);
+      color: var(--fog);
+      padding: 1.5rem 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+    }
+ 
+    /* ── MOBILE ── */
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      nav ul { gap: 1.2rem; }
+      #hero { grid-template-columns: 1fr; }
+      .hero-right { min-height: 260px; }
+      .hero-left { padding: 3rem 1.5rem; }
+      #about { grid-template-columns: 1fr; }
+      .about-left { border-right: none; border-bottom: 2px solid var(--stone); padding: 3rem 1.5rem; }
+      .about-right { padding: 3rem 1.5rem; }
+      #projects { padding: 3rem 1.5rem; }
+      .projects-grid { grid-template-columns: 1fr; }
+      .project-card { border-right: none; }
+      #experience { padding: 3rem 1.5rem; }
+      .timeline-item { grid-template-columns: 1fr; gap: 0.5rem; }
+      #contact { grid-template-columns: 1fr; }
+      .contact-left { border-right: none; border-bottom: 2px solid var(--stone); padding: 3rem 1.5rem; }
+      .contact-right { padding: 3rem 1.5rem; }
+      footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+    }
+  </style>
+</head>
+ 
+<body>
+ 
+  <!-- NAV -->
+  <nav>
+    <a href="#hero" class="logo">Alana</a>
+    <ul>
+      <li><a href="#about">About</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+ 
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-left">
+      <p class="hero-eyebrow">Materials Science & Engineering · UC Berkeley</p>
+      <h1 class="hero-name">Alana</h1>
+      <p class="hero-tagline">Engineering the materials of tomorrow — from atomic structure to real-world application.</p>
+      <div class="hero-ctas">
+        <a href="#projects" class="btn-primary">View Projects</a>
+        <a href="#contact" class="btn-outline">Get in Touch</a>
+      </div>
+    </div>
+    <div class="hero-right">
+      <!-- Decorative botanical SVG -->
+      <svg class="plant-deco" viewBox="0 0 340 420" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M170 420 C170 420 160 320 100 260 C60 220 20 230 10 200 C0 170 40 140 80 160 C110 175 130 200 150 240" stroke="white" stroke-width="3" fill="none"/>
+        <path d="M170 420 C170 420 180 310 240 250 C280 210 330 220 335 190 C340 160 300 130 260 155 C230 172 210 200 190 245" stroke="white" stroke-width="3" fill="none"/>
+        <path d="M150 280 C130 260 90 265 70 245 C55 230 65 205 85 215 C100 222 115 240 135 258" stroke="white" stroke-width="2" fill="none"/>
+        <path d="M190 260 C215 240 255 248 270 228 C282 213 270 188 252 200 C237 208 224 228 202 248" stroke="white" stroke-width="2" fill="none"/>
+        <ellipse cx="170" cy="420" rx="8" ry="14" fill="white" opacity="0.6"/>
+      </svg>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <div class="hero-stat-num">B.S.</div>
+          <div class="hero-stat-label">Materials Science & Eng</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-num">2026</div>
+          <div class="hero-stat-label">Expected Graduation</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-num">NNE</div>
+          <div class="hero-stat-label">Nuclear Energy Research</div>
+        </div>
+      </div>
+    </div>
+  </section>
+ 
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="about-left">
+      <div class="section-header">
+        <span class="section-num">01</span>
+        <h2 class="section-title">About</h2>
+      </div>
+      <div class="about-body">
+        <p>I'm an undergraduate Materials Science & Engineering student at UC Berkeley, driven by the intersection of atomic-scale phenomena and real-world engineering challenges.</p>
+        <p>My focus spans structural materials, nuclear energy, and advanced characterization — with hands-on lab experience in heat treatment, mechanical testing, and environmental sensing systems.</p>
+        <p>Outside of the lab, I work on creative and technical side projects including digital video production, electronics hardware, and computational tools for materials analysis.</p>
+      </div>
+    </div>
+    <div class="about-right">
+      <div>
+        <p style="font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--sage); margin-bottom: 1rem;">Technical Skills</p>
+        <div class="skills-grid">
+          <div class="skill-tag">Python / MATLAB</div>
+          <div class="skill-tag">Nuclear Eng.</div>
+          <div class="skill-tag">Fracture Mechanics</div>
+          <div class="skill-tag">XRD / SEM</div>
+          <div class="skill-tag">Heat Treatment</div>
+          <div class="skill-tag">Serpent / SCALE</div>
+          <div class="skill-tag">DaVinci Resolve</div>
+          <div class="skill-tag">Electronics</div>
+        </div>
+      </div>
+    </div>
+  </section>
+ 
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2 class="section-title">Projects</h2>
+    </div>
+    <div class="projects-grid">
+ 
+      <div class="project-card" data-num="01">
+        <span class="project-tag">Materials Science</span>
+        <h3 class="project-title">Heat Treatment of Steel Analysis</h3>
+        <p class="project-desc">Investigated U-shaped Rockwell hardness profiles across five microstructural regions in heat-treated steel, correlating TTT cooling curves to pearlite and martensite formation.</p>
+        <a href="#" class="project-link">View report →</a>
+      </div>
+ 
+      <div class="project-card" data-num="02">
+        <span class="project-tag">Data & Statistics</span>
+        <h3 class="project-title">Environmental Sensor Analysis</h3>
+        <p class="project-desc">Applied Poisson statistics, CLT, and histogram analysis to radiation and air quality sensor datasets. Built a reusable Jupyter notebook workflow for ongoing lab sessions.</p>
+        <a href="#" class="project-link">View notebook →</a>
+      </div>
+ 
+      <div class="project-card" data-num="03">
+        <span class="project-tag">Nuclear Energy</span>
+        <h3 class="project-title">Micro-Reactor Research</h3>
+        <p class="project-desc">Research into HALEU-fueled micro-modular reactors (KRONOS MMR, ZEUS) at Nano Nuclear Energy. Coursework in reactor physics simulation using Serpent and SCALE.</p>
+        <a href="#" class="project-link">Learn more →</a>
+      </div>
+ 
+      <div class="project-card" data-num="04">
+        <span class="project-tag">Creative Tech</span>
+        <h3 class="project-title">3D Compositing in DaVinci Fusion</h3>
+        <p class="project-desc">Node-based 3D blood-dip text effect built in DaVinci Resolve Fusion. Explored MultiPoly masking, Invert logic, and frame-rate conversion workflows with FFmpeg.</p>
+        <a href="#" class="project-link">View project →</a>
+      </div>
+ 
+      <div class="project-card" data-num="05">
+        <span class="project-tag">Electronics</span>
+        <h3 class="project-title">RC Brushless Motor Circuit</h3>
+        <p class="project-desc">Designed and wired a radio-controlled circuit including brushless motor, ESCs, series battery configuration, receiver, and switch — with three-phase wiring and positive-rail switching.</p>
+        <a href="#" class="project-link">View schematic →</a>
+      </div>
+ 
+      <div class="project-card" data-num="06">
+        <span class="project-tag">Computational</span>
+        <h3 class="project-title">MATLAB Numerical Computing</h3>
+        <p class="project-desc">Array operations including Vandermonde matrix construction via broadcasting and vander(), used in materials property curve-fitting and numerical analysis coursework.</p>
+        <a href="#" class="project-link">View code →</a>
+      </div>
+ 
+    </div>
+  </section>
+ 
+  <!-- EXPERIENCE -->
+  <section id="experience">
+    <div style="padding: 5rem 3rem;">
+      <div class="section-header">
+        <span class="section-num">03</span>
+        <h2 class="section-title">Experience</h2>
+      </div>
+ 
+      <div class="timeline">
+ 
+        <div class="timeline-item">
+          <div class="timeline-date">Summer 2025<br/>10 weeks</div>
+          <div class="timeline-content">
+            <div class="timeline-role">Nuclear Engineering Intern</div>
+            <div class="timeline-org">Nano Nuclear Energy (NASDAQ: NNE)</div>
+            <p class="timeline-desc">Research into HALEU-fueled microreactor design including KRONOS MMR and ZEUS programs. Applied reactor physics simulation tools (Serpent, SCALE) and contributed to technical documentation for advanced small modular reactor concepts.</p>
+          </div>
+        </div>
+ 
+        <div class="timeline-item">
+          <div class="timeline-date">2022 – Present</div>
+          <div class="timeline-content">
+            <div class="timeline-role">B.S. Materials Science & Engineering</div>
+            <div class="timeline-org">University of California, Berkeley</div>
+            <p class="timeline-desc">Coursework spanning fracture mechanics, dislocation theory, crystallography, thermodynamics, and laboratory techniques including Rockwell hardness testing, heat treatment, XRD, and SEM. Lab course under Prof. Jie Yao (MSE 45L).</p>
+          </div>
+        </div>
+ 
+        <div class="timeline-item">
+          <div class="timeline-date">Ongoing</div>
+          <div class="timeline-content">
+            <div class="timeline-role">Independent Technical Projects</div>
+            <div class="timeline-org">Self-directed</div>
+            <p class="timeline-desc">Hardware electronics design, video production and compositing, computational materials analysis, and open-source tooling. Spanning RF electronics, DaVinci Resolve Fusion, Python data pipelines, and MATLAB numerical methods.</p>
+          </div>
+        </div>
+ 
+      </div>
+ 
+      <div class="resume-cta">
+        <p>Full resume available on request or download</p>
+        <a href="resume.pdf" class="btn-resume" download>Download Resume</a>
+      </div>
+    </div>
+  </section>
+ 
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="contact-left">
+      <div class="section-header">
+        <span class="section-num">04</span>
+        <h2 class="section-title">Contact</h2>
+      </div>
+      <p class="contact-intro">Open to research roles, internships, and interesting collaborations in materials and nuclear engineering.</p>
+      <div class="contact-links">
+        <a href="mailto:your@email.com" class="contact-link-row">
+          <span class="contact-link-label">Email</span>
+          <span class="contact-link-value">your@email.com</span>
+        </a>
+        <a href="https://linkedin.com/in/yourprofile" class="contact-link-row" target="_blank">
+          <span class="contact-link-label">LinkedIn</span>
+          <span class="contact-link-value">linkedin.com/in/yourprofile</span>
+        </a>
+        <a href="https://github.com/yourgithub" class="contact-link-row" target="_blank">
+          <span class="contact-link-label">GitHub</span>
+          <span class="contact-link-value">github.com/yourgithub</span>
+        </a>
+        <a href="resume.pdf" class="contact-link-row" download>
+          <span class="contact-link-label">Resume</span>
+          <span class="contact-link-value">Download PDF</span>
+        </a>
+      </div>
+    </div>
+    <div class="contact-right">
+      <div class="big-text">LET'S<br/>BUILD<br/>THINGS.</div>
+      <p class="contact-note">
+        Based in Berkeley, CA<br/>
+        Available for Summer 2026 opportunities<br/>
+        Response time: within 48 hrs
+      </p>
+    </div>
+  </section>
+ 
+  <!-- FOOTER -->
+  <footer>
+    <span>© 2025 Alana — All rights reserved</span>
+    <span>Materials Science & Engineering · UC Berkeley</span>
+  </footer>
+ 
+</body>
+</html>
