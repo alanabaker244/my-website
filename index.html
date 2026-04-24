@@ -318,25 +318,23 @@
     }
  
     .projects-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-      gap: 0;
-      border: 2px solid var(--stone);
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        gap: 0;
+        border-left: 2px solid var(--stone);
+        border-top: 2px solid var(--stone);
     }
- 
-    .project-card {
-      padding: 2rem;
-      border-right: 2px solid var(--stone);
-      border-bottom: 2px solid var(--stone);
-      position: relative;
-      overflow: hidden;
-      transition: background 0.25s;
+
+        .project-card {
+        padding: 2rem;
+        border-right: 2px solid var(--stone);
+        border-bottom: 2px solid var(--stone);
+        position: relative;
+        overflow: hidden;
+        transition: background 0.25s;
     }
- 
-    .project-card:hover { background: var(--fog); }
- 
-    .project-card:last-child,
-    .project-card:nth-child(3n) { border-right: none; }
+
+.project-card:hover { background: var(--fog); }
  
     .project-card::before {
       content: attr(data-num);
