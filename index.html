@@ -6,7 +6,8 @@
   <title>Alana — Portfolio</title>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=IBM+Plex+Mono:wght@400;500&family=Söhne:wght@400;500&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&family=Bebas+Neue&family=Syne:wght@400;700;800&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />
- 
+  <script src="https://www.google.com/recaptcha/api.js?render=6LfHp8osAAAAAFT5rFmLp9YYf8k5pBlXpqlch6qG"></script>
+
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
  
@@ -599,6 +600,17 @@
  
 <body>
  
+  <div id="captcha-gate" style="
+  position: fixed; inset: 0; z-index: 9999;
+  background: #1a1a14;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 1.2rem;
+">
+    <span style="font-family: 'Bebas Neue', sans-serif; font-size: 2.5rem; color: #f0ede4; letter-spacing: 0.08em;">Alana</span>
+    <span style="font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; color: #7a9162;">Verifying...</span>
+  </div>
+
   <!-- NAV -->
   <nav>
     <a href="#hero" class="logo">Alana</a>
@@ -817,6 +829,23 @@
     <span>© 2026 Alana — All rights reserved</span>
     <span>Nuclear Engineering · UC Berkeley</span>
   </footer>
+
+  <script>
+    function runCaptcha() {
+      if (typeof grecaptcha === 'undefined') {
+        setTimeout(runCaptcha, 100);
+        return;
+      }
+      grecaptcha.ready(function () {
+        grecaptcha.execute('6LfHp8osAAAAAFT5rFmLp9YYf8k5pBlXpqlch6qG', { action: 'page_load' }).then(function (token) {
+          document.getElementById('captcha-gate').style.display = 'none';
+        }).catch(function () {
+          document.getElementById('captcha-gate').style.display = 'none';
+        });
+      });
+    }
+    runCaptcha();
+  </script>
  
 </body>
 </html>
