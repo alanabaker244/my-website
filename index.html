@@ -244,17 +244,30 @@
     /* ── HERO PHOTO ── */
 
     .hero-photo {
+      width: 300px;
+      border: 3px solid var(--lichen);
+      object-fit: cover;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.35);
+      display: block;
+    }
+
+    .hero-photo-wrap {      
       --photo-right:  2rem;
-      --photo-bottom: 3rem;
+      --photo-bottom: 4rem;
 
       position: absolute;
       right:   var(--photo-right);
       bottom:  var(--photo-bottom);
-      width: 300px;
-      border: 3px solid var(--lichen);
-      object-fit: cover;
       z-index: 2;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.35);
+    }
+
+    .hero-photo-caption {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.62rem;
+      color: rgba(255,255,255,0.45);
+      text-align: center;
+      margin-top: 0.4rem;
+      letter-spacing: 0.06em;
     }
  
     /* ── SECTION SHARED ── */
@@ -663,7 +676,10 @@
         <path d="M190 260 C215 240 255 248 270 228 C282 213 270 188 252 200 C237 208 224 228 202 248" stroke="white" stroke-width="2" fill="none"/>
         <ellipse cx="170" cy="420" rx="8" ry="14" fill="white" opacity="0.6"/>
       </svg>
-      <img src="IMG_1330.JPG" alt="headshot of me, done by me" class="hero-photo" />
+      <div class="hero-photo-wrap">
+        <img src="IMG_1330.JPG" alt="headshot of me, done by me" class="hero-photo" />
+        <p class="hero-photo-caption"> 📷 Photo taken by Alana Baker 📷</p>
+      </div>
       <div class="hero-stats">
         <div class="hero-stat">
           <div class="hero-stat-num">B.S.</div>
