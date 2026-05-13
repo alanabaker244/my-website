@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.google.com/recaptcha/ https://www.gstatic.com/recaptcha/; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; frame-src https://www.google.com/recaptcha/;">
   <title>Alana — Portfolio</title>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=IBM+Plex+Mono:wght@400;500&family=Söhne:wght@400;500&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&family=Bebas+Neue&family=Syne:wght@400;700;800&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />
@@ -839,11 +840,11 @@
           <span class="contact-link-label">Email</span>
           <span class="contact-link-value">alana.baker244@gmail.com</span>
         </a>
-        <a href="https://www.linkedin.com/in/alana-baker-72379a386/" class="contact-link-row" target="_blank">
+        <a href="https://www.linkedin.com/in/alana-baker-72379a386/" class="contact-link-row" target="_blank" rel="noopener noreferrer">
           <span class="contact-link-label">LinkedIn</span>
           <span class="contact-link-value">linkedin.com/in/alana-baker/</span>
         </a>
-        <a href="https://github.com/alanabaker244" class="contact-link-row" target="_blank">
+        <a href="https://github.com/alanabaker244" class="contact-link-row" target="_blank" rel="noopener noreferrer">
           <span class="contact-link-label">GitHub</span>
           <span class="contact-link-value">github.com/alanabaker244</span>
         </a>
@@ -879,7 +880,7 @@
         grecaptcha.execute('6LfHp8osAAAAAFT5rFmLp9YYf8k5pBlXpqlch6qG', { action: 'page_load' }).then(function (token) {
           document.getElementById('captcha-gate').style.display = 'none';
         }).catch(function () {
-          document.getElementById('captcha-gate').style.display = 'none';
+          document.getElementById('captcha-gate').innerHTML = '<span style="font-family:\'IBM Plex Mono\',monospace;font-size:0.72rem;letter-spacing:0.16em;text-transform:uppercase;color:#8c4a2f;">Verification failed. Please refresh.</span>';
         });
       });
     }
