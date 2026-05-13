@@ -240,6 +240,22 @@
       width: 340px;
       opacity: 0.18;
     }
+
+    /* ── HERO PHOTO ── */
+
+    .hero-photo {
+      --photo-right:  2rem;
+      --photo-bottom: 3rem;
+
+      position: absolute;
+      right:   var(--photo-right);
+      bottom:  var(--photo-bottom);
+      width: 220px;
+      border: 3px solid var(--lichen);
+      object-fit: cover;
+      z-index: 2;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.35);
+    }
  
     /* ── SECTION SHARED ── */
     section {
@@ -663,7 +679,7 @@
       </div>
     </div>
   </section>
- 
+
   <!-- ABOUT -->
   <section id="about">
     <div class="about-left">
