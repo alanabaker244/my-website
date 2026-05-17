@@ -1,638 +1,613 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Alana's Portfolio</title>
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=IBM+Plex+Mono:wght@400;500&family=Söhne:wght@400;500&display=swap" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&family=Bebas+Neue&family=Syne:wght@400;700;800&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />
-    <link rel="icon" type="image/png" href="favicon.png" />
-
-    <style>
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>β⁻ Decay Spectra — Alana Baker</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;700;800&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/png" href="favicon.png" />
+ 
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+ 
     :root {
-      --stone: #1a1a14;
-      --moss: #3b4a2f;
-      --sage: #7a9162;
-      --lichen: #b8c9a3;
-      --cream: #f0ede4;
-      --rust: #8c4a2f;
-      --bark: #5c3d1e;
-      --fog: #d6d3ca;
-      --ink: #0d0d0a;
+      --bg:     #1a1a14;
+      --panel:  #393d37;
+      --border: rgba(180, 210, 140, 0.12);
+      --green:  #b8c9a3;
+      --green2: #7a9162;
+      --dim:    rgba(180, 210, 140, 0.35);
+      --text:   #f0ede4;
+      --muted:  #728467;
+      --amber:  #d4a847;
+      --red:    #c05540;
     }
  
     html { scroll-behavior: smooth; }
  
     body {
-      background-color: var(--cream);
-      color: var(--stone);
-      font-family: 'Lora', Georgia, serif;
-      font-size: 18px;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Space Mono', monospace;
+      font-size: 14px;
       line-height: 1.7;
       overflow-x: hidden;
     }
  
-    /* ── TEXTURE OVERLAY ── */
-    body::before {
+    body::after {
       content: '';
       position: fixed;
       inset: 0;
       pointer-events: none;
-      z-index: 0;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-      opacity: 0.5;
+      z-index: 999;
+      background: repeating-linear-gradient(
+        0deg, transparent, transparent 2px,
+        rgba(0,0,0,0.04) 2px, rgba(0,0,0,0.04) 4px
+      );
     }
  
     /* ── NAV ── */
     nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 100;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1.2rem 3rem;
-      background: var(--cream);
-      border-bottom: 2px solid var(--stone);
-      mix-blend-mode: normal;
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1rem 2.5rem;
+      background: rgba(11,12,10,0.95);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(4px);
     }
- 
-    nav .logo {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.6rem;
-      letter-spacing: 0.08em;
-      color: var(--stone);
-      text-decoration: none;
-    }
- 
-    nav ul {
-      list-style: none;
-      display: flex;
-      gap: 2.5rem;
-    }
- 
-    nav ul a {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.78rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--stone);
-      text-decoration: none;
-      border-bottom: 1px solid transparent;
-      transition: border-color 0.2s;
-    }
- 
-    nav ul a:hover { border-color: var(--moss); }
+    nav .logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1rem; letter-spacing: 0.06em; color: var(--green); text-decoration: none; }
+    nav ul { list-style: none; display: flex; gap: 2rem; }
+    nav ul a { font-family: 'Space Mono', monospace; font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+    nav ul a:hover { color: var(--green); }
  
     /* ── HERO ── */
-    #hero {
-      position: relative;
-      min-height: 100vh;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      border-bottom: 2px solid var(--stone);
-      padding-top: 80px;
-      overflow: hidden;
+    #hero { padding-top: 56px; min-height: 100vh; display: flex; flex-direction: column; }
+ 
+    .hero-top {
+      flex: 1; display: grid; grid-template-columns: 1fr 420px;
+      border-bottom: 1px solid var(--border);
     }
  
-    .hero-left {
-      padding: 5rem 3rem 4rem 3rem;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      border-right: 2px solid var(--stone);
-      position: relative;
-      z-index: 1;
+    .hero-title-area {
+      padding: 4rem 3rem 3rem; border-right: 1px solid var(--border);
+      display: flex; flex-direction: column; justify-content: flex-end;
     }
  
-    .hero-eyebrow {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.72rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--moss);
-      margin-bottom: 1.2rem;
+    .report-label {
+      font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--green2); margin-bottom: 1.5rem;
+      display: flex; align-items: center; gap: 0.8rem;
     }
+    .report-label::before { content: ''; display: inline-block; width: 20px; height: 1px; background: var(--green2); }
  
-    .hero-name {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(5rem, 12vw, 9.5rem);
-      line-height: 0.9;
-      letter-spacing: 0.02em;
-      color: var(--stone);
-      margin-bottom: 2rem;
+    h1 {
+      font-family: 'Syne', sans-serif; font-weight: 800;
+      font-size: clamp(3.5rem, 9vw, 7.5rem); line-height: 0.88;
+      letter-spacing: -0.01em; color: #fff; margin-bottom: 2rem;
     }
+    h1 sup { font-size: 0.45em; vertical-align: super; color: var(--green); }
  
-    .hero-tagline {
-      font-family: 'DM Serif Display', serif;
-      font-style: italic;
-      font-size: 1.25rem;
-      color: var(--moss);
-      max-width: 34ch;
-      line-height: 1.5;
-      margin-bottom: 3rem;
-    }
+    .hero-byline { font-size: 0.72rem; color: var(--muted); margin-bottom: 2.5rem; line-height: 1.8; }
+    .hero-byline strong { color: var(--text); font-weight: 400; }
  
-    .hero-ctas {
-      display: flex;
-      gap: 1rem;
-      flex-wrap: wrap;
-    }
+    .cta-row { display: flex; gap: 0.75rem; flex-wrap: wrap; }
  
-    .btn-primary {
-      display: inline-block;
-      background: var(--stone);
-      color: var(--cream);
-      padding: 0.75rem 2rem;
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.75rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      text-decoration: none;
-      border: 2px solid var(--stone);
-      transition: background 0.2s, color 0.2s;
+    .btn {
+      font-family: 'Space Mono', monospace; font-size: 0.65rem; letter-spacing: 0.14em;
+      text-transform: uppercase; text-decoration: none; padding: 0.65rem 1.4rem;
+      border: 1px solid; transition: all 0.2s; display: inline-block;
     }
+    .btn-solid { background: var(--green); color: var(--bg); border-color: var(--green); }
+    .btn-solid:hover { background: #a8e08a; border-color: #a8e08a; }
+    .btn-ghost { background: transparent; color: var(--muted); border-color: var(--border); }
+    .btn-ghost:hover { color: var(--green); border-color: var(--dim); }
  
-    .btn-primary:hover {
-      background: var(--moss);
-      border-color: var(--moss);
-    }
+    /* ── SPECTRUM PANEL ── */
+    .hero-spectrum { padding: 2rem; display: flex; flex-direction: column; justify-content: flex-end; }
+    .spectrum-label { font-size: 0.6rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin-bottom: 1rem; }
+    .spectrum-canvas { width: 100%; height: 180px; }
+    #spec-svg { width: 100%; height: 100%; }
+    .spectrum-axis { display: flex; justify-content: space-between; margin-top: 0.4rem; font-size: 0.58rem; color: var(--muted); }
+    .spec-legend { display: flex; gap: 1.2rem; margin-top: 1rem; font-size: 0.6rem; color: var(--muted); }
+    .spec-legend span { display: flex; align-items: center; gap: 0.4rem; }
  
-    .btn-outline {
-      display: inline-block;
-      background: transparent;
-      color: var(--stone);
-      padding: 0.75rem 2rem;
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.75rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      text-decoration: none;
-      border: 2px solid var(--stone);
-      transition: background 0.2s, color 0.2s;
-    }
+    /* ── STAT STRIP ── */
+    .stat-strip { display: grid; grid-template-columns: repeat(5, 1fr); border-bottom: 1px solid var(--border); }
+    .stat-cell { padding: 1.2rem 1.8rem; border-right: 1px solid var(--border); }
+    .stat-cell:last-child { border-right: none; }
+    .stat-num { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.9rem; color: #fff; line-height: 1; margin-bottom: 0.3rem; }
+    .stat-num.amber { color: var(--amber); }
+    .stat-num.green { color: var(--green); }
+    .stat-label { font-size: 0.58rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
  
-    .btn-outline:hover {
-      background: var(--stone);
-      color: var(--cream);
-    }
-
-    .grecaptcha-badge { 
-      visibility: hidden; 
-    }
+    /* ── SECTIONS ── */
+    section { position: relative; }
+    .section-tag { font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--green2); margin-bottom: 0.8rem; display: flex; align-items: center; gap: 0.6rem; }
+    .section-tag::before { content: ''; display: inline-block; width: 12px; height: 1px; background: var(--green2); }
+    h2 { font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(1.8rem, 4vw, 2.8rem); line-height: 1; letter-spacing: -0.01em; color: #fff; margin-bottom: 2rem; }
  
-    .hero-right {
-      position: relative;
-      background: var(--moss);
-      overflow: hidden;
-      display: flex;
-      align-items: flex-end;
-      justify-content: flex-start;
-      padding: 3rem;
-    }
+    /* ── ABSTRACT ── */
+    #abstract { display: grid; grid-template-columns: 260px 1fr; border-bottom: 1px solid var(--border); }
+    .abstract-rail { padding: 3rem 1.8rem; border-right: 1px solid var(--border); }
+    .rail-block { margin-bottom: 2rem; }
+    .rail-block-label { font-size: 0.58rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.5rem; }
+    .rail-block-val { font-size: 0.78rem; color: var(--text); line-height: 1.6; }
+    .keyword-list { display: flex; flex-direction: column; gap: 0.3rem; }
+    .keyword { font-size: 0.62rem; letter-spacing: 0.08em; color: var(--green); border: 1px solid rgba(126,203,106,0.2); padding: 0.2rem 0.6rem; display: inline-block; align-self: flex-start; }
+    .abstract-body { padding: 3rem; }
+    .abstract-text { font-family: 'DM Serif Display', serif; font-size: 1.1rem; line-height: 1.7; color: var(--text); max-width: 60ch; font-style: italic; }
+    .abstract-text p + p { margin-top: 1.2rem; }
  
-    /* Decorative botanical SVG fills */
-    .hero-right::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background:
-        radial-gradient(ellipse 60% 80% at 70% 30%, rgba(90,120,60,0.35) 0%, transparent 70%),
-        radial-gradient(ellipse 40% 60% at 20% 80%, rgba(30,50,20,0.4) 0%, transparent 60%);
-    }
+    /* ── FINDINGS ACCORDION ── */
+    #findings { border-bottom: 1px solid var(--border); }
+    .findings-header { padding: 3rem 3rem 2rem; }
+    .finding-row { border-top: 1px solid var(--border); cursor: pointer; transition: background 0.2s; }
+    .finding-row:hover { background: rgba(126,203,106,0.03); }
+    .finding-row-head { display: grid; grid-template-columns: 56px 1fr auto; align-items: center; gap: 1.5rem; padding: 1.4rem 3rem; }
+    .finding-index { font-family: 'Syne', sans-serif; font-size: 0.65rem; font-weight: 800; color: var(--green2); letter-spacing: 0.1em; }
+    .finding-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1rem; color: #fff; }
+    .finding-toggle { font-size: 1.2rem; color: var(--muted); transition: transform 0.25s; line-height: 1; user-select: none; }
+    .finding-body { max-height: 0; overflow: hidden; transition: max-height 0.35s ease; }
+    .finding-body-inner { padding: 0 3rem 1.8rem 7.5rem; font-size: 0.82rem; color: var(--muted); line-height: 1.75; max-width: 72ch; }
+    .finding-row.open .finding-toggle { transform: rotate(45deg); }
+    .finding-row.open .finding-body { max-height: 300px; }
  
-    .hero-stats {
-      position: relative;
-      z-index: 1;
-      display: flex;
-      flex-direction: column;
-      gap: 1.5rem;
-    }
+    /* ── PARAMETERS ── */
+    #parameters { border-bottom: 1px solid var(--border); }
+    .params-header { padding: 3rem 3rem 2rem; }
+    .param-scroll { overflow-x: auto; padding: 0 3rem 3rem; }
+    .param-cards { display: flex; gap: 0; min-width: max-content; }
+    .param-card { border: 1px solid var(--border); border-right: none; padding: 1.5rem 1.8rem; min-width: 165px; position: relative; transition: background 0.2s; }
+    .param-card:last-child { border-right: 1px solid var(--border); }
+    .param-card:hover { background: rgba(126,203,106,0.04); }
+    .param-symbol { font-family: 'Space Mono', monospace; font-size: 1.1rem; color: var(--green); margin-bottom: 0.5rem; }
+    .param-value { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.4rem; color: #fff; line-height: 1.1; margin-bottom: 0.4rem; }
+    .param-unit { font-size: 0.6rem; color: var(--muted); margin-bottom: 0.6rem; }
+    .param-desc { font-size: 0.65rem; color: var(--muted); line-height: 1.5; }
+    .param-bar { position: absolute; bottom: 0; left: 0; height: 2px; background: var(--green); opacity: 0.4; }
  
-    .hero-stat {
-      border-left: 3px solid var(--lichen);
-      padding-left: 1rem;
-    }
+    /* ── INTERACTIVE EXPLORER ── */
+    #explorer { border-bottom: 1px solid var(--border); padding: 3rem; }
+    .explorer-grid { display: grid; grid-template-columns: 1fr 300px; gap: 2rem; margin-top: 2rem; }
+    .explorer-canvas { position: relative; height: 300px; border: 1px solid var(--border); }
+    #explorer-svg { width: 100%; height: 100%; }
+    .explorer-controls { display: flex; flex-direction: column; gap: 1.4rem; }
+    .control-label { font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.5rem; display: flex; justify-content: space-between; }
+    .control-label span { color: var(--green); }
+    input[type="range"] { width: 100%; accent-color: var(--green); }
+    .control-toggles { display: flex; flex-direction: column; gap: 0.5rem; }
+    .toggle-btn { font-family: 'Space Mono', monospace; font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.5rem 0.8rem; border: 1px solid var(--border); background: transparent; color: var(--muted); cursor: pointer; text-align: left; transition: all 0.15s; }
+    .toggle-btn.active { border-color: rgba(126,203,106,0.4); color: var(--green); background: rgba(126,203,106,0.06); }
  
-    .hero-stat-num {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 2.8rem;
-      color: var(--cream);
-      line-height: 1;
-    }
+    /* ── METHOD ── */
+    #method { display: grid; grid-template-columns: 1fr 1fr; border-bottom: 1px solid var(--border); }
+    .method-left { padding: 3rem; border-right: 1px solid var(--border); }
+    .method-step { border-left: 1px solid var(--border); padding: 1.2rem 0 1.2rem 1.5rem; position: relative; }
+    .method-step::before { content: ''; position: absolute; left: -4px; top: 1.5rem; width: 7px; height: 7px; border-radius: 50%; background: var(--green2); }
+    .step-num { font-size: 0.58rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--green2); margin-bottom: 0.3rem; }
+    .step-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.88rem; color: #fff; margin-bottom: 0.4rem; }
+    .step-desc { font-size: 0.75rem; color: var(--muted); line-height: 1.65; }
+    .method-right { padding: 3rem; background: var(--panel); }
+    .equation-block { margin-bottom: 1.8rem; }
+    .eq-label { font-size: 0.58rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.6rem; }
+    .eq-body { font-size: 0.82rem; color: var(--green); line-height: 2; padding: 1rem 1.2rem; border: 1px solid rgba(126,203,106,0.15); background: rgba(126,203,106,0.03); }
+    .component-list { display: flex; flex-direction: column; gap: 0.8rem; }
+    .component { padding: 0.8rem 1rem; border-left: 2px solid var(--green2); }
+    .component-name { font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--green); margin-bottom: 0.25rem; }
+    .component-desc { font-size: 0.72rem; color: var(--muted); line-height: 1.5; }
  
-    .hero-stat-label {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.68rem;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--lichen);
-    }
+    /* ── LIMITATIONS ── */
+    #limitations { border-bottom: 1px solid var(--border); padding: 3rem; }
+    .limitations-list { display: grid; grid-template-columns: 1fr 1fr; gap: 0; margin-top: 2rem; border: 1px solid var(--border); }
+    .lim-item { padding: 1.5rem; border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .lim-item:nth-child(even) { border-right: none; }
+    .lim-item:nth-last-child(-n+2) { border-bottom: none; }
+    .lim-code { font-size: 0.58rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--red); margin-bottom: 0.5rem; }
+    .lim-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.9rem; color: #fff; margin-bottom: 0.5rem; }
+    .lim-desc { font-size: 0.72rem; color: var(--muted); line-height: 1.6; }
  
-    /* Plant decoration */
-    .plant-deco {
-      position: absolute;
-      right: -20px;
-      top: -10px;
-      width: 340px;
-      opacity: 0.18;
-    }
-
-    /* ── HERO PHOTO ── */
-
-    .hero-photo {
-      width: 300px;
-      border: 3px solid var(--lichen);
-      object-fit: cover;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.35);
-      display: block;
-    }
-
-    .hero-photo-wrap {      
-      --photo-right:  2rem;
-      --photo-bottom: 3rem;
-
-      position: absolute;
-      right:   var(--photo-right);
-      bottom:  var(--photo-bottom);
-      z-index: 2;
-    }
-
-    .hero-photo-caption {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.62rem;
-      color: rgba(255,255,255,0.45);
-      text-align: center;
-      margin-top: 0.6rem;
-      letter-spacing: 0.06em;
-    }
- 
-    /* ── SECTION SHARED ── */
-    section {
-      position: relative;
-      z-index: 1;
-    }
- 
-    .section-header {
-      display: flex;
-      align-items: baseline;
-      gap: 1.5rem;
-      margin-bottom: 3rem;
-      border-bottom: 2px solid var(--stone);
-      padding-bottom: 1rem;
-    }
- 
-    .section-num {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.72rem;
-      letter-spacing: 0.15em;
-      color: var(--sage);
-    }
- 
-    .section-title {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 3.5rem;
-      letter-spacing: 0.04em;
-      color: var(--stone);
-      line-height: 1;
-    }
- 
-    /* ── ABOUT ── */
-    #about {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      border-bottom: 2px solid var(--stone);
-    }
- 
-    .about-left {
-      padding: 5rem 3rem;
-      border-right: 2px solid var(--stone);
-    }
- 
-    .about-body {
-      font-size: 1.05rem;
-      color: var(--stone);
-      max-width: 48ch;
-    }
- 
-    .about-body p + p { margin-top: 1.2rem; }
- 
-    .about-right {
-      padding: 5rem 3rem;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
- 
-    .skills-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0;
-      border: 2px solid var(--stone);
-    }
- 
-    .skill-tag {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.75rem;
-      letter-spacing: 0.08em;
-      padding: 0.7rem 1rem;
-      border-right: 1px solid var(--stone);
-      border-bottom: 1px solid var(--stone);
-      color: var(--stone);
-    }
- 
-    .skill-tag:nth-child(even) { border-right: none; }
- 
-    /* ── PROJECTS ── */
-    #projects {
-      padding: 5rem 3rem;
-      border-bottom: 2px solid var(--stone);
-    }
- 
-    .projects-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(calc(33.33% - 0px), 1fr));
-        gap: 0;
-        border-left: 2px solid var(--stone);
-        border-top: 2px solid var(--stone);
-    }
-
-        .project-card {
-        padding: 2rem;
-        border-right: 2px solid var(--stone);
-        border-bottom: 2px solid var(--stone);
-        position: relative;
-        overflow: hidden;
-        transition: background 0.25s;
-    }
-
-.project-card:hover { background: var(--fog); }
- 
-    .project-card::before {
-      content: attr(data-num);
-      position: absolute;
-      top: 1.2rem; right: 1.5rem;
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 4rem;
-      color: var(--lichen);
-      line-height: 1;
-    }
- 
-    .project-tag {
-      display: inline-block;
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.65rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      background: var(--moss);
-      color: var(--cream);
-      padding: 0.25rem 0.6rem;
-      margin-bottom: 1rem;
-    }
- 
-    .project-title {
-      font-family: 'DM Serif Display', serif;
-      font-size: 1.4rem;
-      color: var(--stone);
-      margin-bottom: 0.7rem;
-      max-width: 24ch;
-    }
- 
-    .project-desc {
-      font-size: 0.9rem;
-      color: var(--moss);
-      line-height: 1.6;
-      margin-bottom: 1.5rem;
-    }
- 
-    .project-link {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.72rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--rust);
-      text-decoration: none;
-      border-bottom: 1px solid currentColor;
-    }
- 
-    /* ── EXPERIENCE ── */
-    #experience {
-      padding: 5rem 3rem;
-      border-bottom: 2px solid var(--stone);
-      background: var(--stone);
-    }
- 
-    #experience .section-title { color: var(--cream); }
-    #experience .section-num { color: var(--sage); }
-    #experience .section-header { border-bottom-color: var(--moss); }
- 
-    .timeline {
-      display: flex;
-      flex-direction: column;
-      gap: 0;
-    }
- 
-    .timeline-item {
-      display: grid;
-      grid-template-columns: 180px 1fr;
-      border-top: 1px solid var(--moss);
-      padding: 2.5rem 0;
-      gap: 3rem;
-      align-items: start;
-    }
- 
-    .timeline-date {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.72rem;
-      letter-spacing: 0.1em;
-      color: var(--sage);
-      padding-top: 0.2rem;
-    }
- 
-    .timeline-content {
-      position: relative;
-    }
- 
-    .timeline-role {
-      font-family: 'DM Serif Display', serif;
-      font-size: 1.3rem;
-      color: var(--cream);
-      margin-bottom: 0.3rem;
-    }
- 
-    .timeline-org {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.78rem;
-      letter-spacing: 0.08em;
-      color: var(--lichen);
-      margin-bottom: 0.8rem;
-    }
- 
-    .timeline-desc {
-      font-size: 0.92rem;
-      color: var(--fog);
-      line-height: 1.65;
-      max-width: 58ch;
-    }
- 
-    .resume-cta {
-      margin-top: 3rem;
-      display: flex;
-      align-items: center;
-      gap: 2rem;
-      border-top: 1px solid var(--moss);
-      padding-top: 2.5rem;
-    }
- 
-    .resume-cta p {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.78rem;
-      letter-spacing: 0.1em;
-      color: var(--lichen);
-      text-transform: uppercase;
-    }
- 
-    .btn-resume {
-      display: inline-block;
-      border: 2px solid var(--cream);
-      color: var(--cream);
-      padding: 0.75rem 2rem;
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.75rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      text-decoration: none;
-      transition: background 0.2s, color 0.2s;
-      flex-shrink: 0;
-    }
- 
-    .btn-resume:hover {
-      background: var(--cream);
-      color: var(--stone);
-    }
- 
-    /* ── CONTACT ── */
-    #contact {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-    }
- 
-    .contact-left {
-      padding: 5rem 3rem;
-      border-right: 2px solid var(--stone);
-    }
- 
-    .contact-intro {
-      font-family: 'DM Serif Display', serif;
-      font-style: italic;
-      font-size: 1.6rem;
-      color: var(--moss);
-      line-height: 1.4;
-      margin-bottom: 2.5rem;
-      max-width: 28ch;
-    }
- 
-    .contact-links {
-      display: flex;
-      flex-direction: column;
-      gap: 0;
-      border: 2px solid var(--stone);
-    }
- 
-    .contact-link-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1rem 1.2rem;
-      border-bottom: 1px solid var(--stone);
-      text-decoration: none;
-      color: var(--stone);
-      transition: background 0.2s;
-    }
- 
-    .contact-link-row:last-child { border-bottom: none; }
-    .contact-link-row:hover { background: var(--fog); }
- 
-    .contact-link-label {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.72rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--sage);
-    }
- 
-    .contact-link-value {
-      font-family: 'Lora', serif;
-      font-size: 0.92rem;
-      color: var(--stone);
-    }
- 
-    .contact-right {
-      padding: 5rem 3rem;
-      background: var(--moss);
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-    }
- 
-    .contact-right .big-text {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(3rem, 7vw, 6rem);
-      color: var(--cream);
-      line-height: 0.95;
-      letter-spacing: 0.03em;
-      opacity: 0.18;
-      margin-bottom: 2rem;
-    }
- 
-    .contact-note {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.72rem;
-      letter-spacing: 0.1em;
-      color: var(--lichen);
-      line-height: 1.8;
-    }
+    /* ── CONCLUSION ── */
+    #conclusion { border-bottom: 1px solid var(--border); display: grid; grid-template-columns: 1fr 280px; }
+    .conclusion-body { padding: 3rem; border-right: 1px solid var(--border); }
+    .conclusion-text { font-family: 'DM Serif Display', serif; font-size: 1.05rem; color: var(--text); line-height: 1.75; max-width: 56ch; }
+    .conclusion-text p + p { margin-top: 1.2rem; }
+    .conclusion-side { padding: 3rem 2rem; display: flex; flex-direction: column; gap: 2rem; }
+    .chi-sq { text-align: center; padding: 2rem; border: 1px solid var(--border); }
+    .chi-label { font-size: 0.58rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.5rem; }
+    .chi-value { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 4rem; color: var(--amber); line-height: 1; }
+    .chi-unit { font-size: 0.58rem; color: var(--muted); margin-top: 0.3rem; }
+    .links-block { display: flex; flex-direction: column; gap: 0.6rem; }
+    .link-row { display: flex; align-items: center; gap: 0.6rem; font-size: 0.65rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); text-decoration: none; border: 1px solid var(--border); padding: 0.6rem 0.8rem; transition: all 0.15s; }
+    .link-row:hover { color: var(--green); border-color: rgba(126,203,106,0.3); }
  
     /* ── FOOTER ── */
-    footer {
-      background: var(--ink);
-      color: var(--fog);
-      padding: 1.5rem 3rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.68rem;
-      letter-spacing: 0.1em;
-    }
+    footer { padding: 1.2rem 2.5rem; display: flex; justify-content: space-between; align-items: center; font-size: 0.58rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); border-top: 1px solid var(--border); }
  
     /* ── MOBILE ── */
     @media (max-width: 768px) {
-      nav { padding: 1rem 1.5rem; }
-      nav ul { gap: 1.2rem; }
-      #hero { grid-template-columns: 1fr; }
-      .hero-right { min-height: 260px; }
-      .hero-left { padding: 3rem 1.5rem; }
-      #about { grid-template-columns: 1fr; }
-      .about-left { border-right: none; border-bottom: 2px solid var(--stone); padding: 3rem 1.5rem; }
-      .about-right { padding: 3rem 1.5rem; }
-      #projects { padding: 3rem 1.5rem; }
-      .projects-grid { grid-template-columns: 1fr; }
-      .project-card { border-right: none; }
-      #experience { padding: 3rem 1.5rem; }
-      .timeline-item { grid-template-columns: 1fr; gap: 0.5rem; }
-      #contact { grid-template-columns: 1fr; }
-      .contact-left { border-right: none; border-bottom: 2px solid var(--stone); padding: 3rem 1.5rem; }
-      .contact-right { padding: 3rem 1.5rem; }
-      footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+      nav { padding: 0.8rem 1.2rem; }
+      nav ul { gap: 1rem; }
+      .hero-top { grid-template-columns: 1fr; }
+      .hero-spectrum { border-top: 1px solid var(--border); }
+      .hero-title-area { border-right: none; }
+      .stat-strip { grid-template-columns: 1fr 1fr; }
+      #abstract { grid-template-columns: 1fr; }
+      .abstract-rail { border-right: none; border-bottom: 1px solid var(--border); }
+      .finding-row-head { grid-template-columns: 40px 1fr auto; padding: 1.2rem 1.5rem; }
+      .finding-body-inner { padding-left: 3.5rem; padding-right: 1.5rem; }
+      #method { grid-template-columns: 1fr; }
+      .method-left { border-right: none; border-bottom: 1px solid var(--border); }
+      .explorer-grid { grid-template-columns: 1fr; }
+      .limitations-list { grid-template-columns: 1fr; }
+      .lim-item { border-right: none; }
+      .lim-item:nth-last-child(-n+2) { border-bottom: 1px solid var(--border); }
+      .lim-item:last-child { border-bottom: none; }
+      #conclusion { grid-template-columns: 1fr; }
+      .conclusion-body { border-right: none; border-bottom: 1px solid var(--border); }
+      footer { flex-direction: column; gap: 0.4rem; text-align: center; }
     }
   </style>
 </head>
-
 <body>
-    <h1>Page 2 !!</h1>
-    <a href="index.html" class="project-link">Go back Home →</a>
+ 
+  <nav>
+    <a href="index.html" class="logo">AB</a>
+    <ul>
+      <li><a href="index.html">Back to Home →</a></li>
+    </ul>
+  </nav>
+ 
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-top">
+      <div class="hero-title-area">
+        <p class="report-label">Radiation Detection Lab Report · UC Berkeley · May 2026</p>
+        <h1>β<sup>−</sup><br/>Decay<br/>Spectra</h1>
+        <p class="hero-byline">
+          <strong>Sr-90 / Y-90</strong> measured in a CsI scintillation detector.<br/>
+          A semi-empirical detector response model with 8 free parameters.<br/>
+          <strong><i>Baker</i> · Yu · Guerrero</strong>
+        </p>
+        <div class="cta-row">
+          <a href="BetaDecayReport.pdf" class="btn btn-solid" download>↓ Download PDF</a>
+          <a href="https://github.com/gabe6295/E11aga" class="btn btn-ghost" target="_blank" rel="noopener">GitHub →</a>
+          <a href="index.html#projects" class="btn btn-ghost">← All Projects</a>
+        </div>
+      </div>
+      <div class="hero-spectrum">
+        <p class="spectrum-label">Measured vs. Theoretical Spectrum (schematic)</p>
+        <div class="spectrum-canvas">
+          <svg id="spec-svg" viewBox="0 0 380 180" preserveAspectRatio="none">
+            <line x1="0" y1="45" x2="380" y2="45" stroke="rgba(180,210,140,0.07)" stroke-width="1"/>
+            <line x1="0" y1="90" x2="380" y2="90" stroke="rgba(180,210,140,0.07)" stroke-width="1"/>
+            <line x1="0" y1="135" x2="380" y2="135" stroke="rgba(180,210,140,0.07)" stroke-width="1"/>
+            <line x1="76" y1="0" x2="76" y2="170" stroke="rgba(180,210,140,0.07)" stroke-width="1"/>
+            <line x1="152" y1="0" x2="152" y2="170" stroke="rgba(180,210,140,0.07)" stroke-width="1"/>
+            <line x1="228" y1="0" x2="228" y2="170" stroke="rgba(180,210,140,0.07)" stroke-width="1"/>
+            <line x1="304" y1="0" x2="304" y2="170" stroke="rgba(180,210,140,0.07)" stroke-width="1"/>
+            <!-- theoretical — broad peak, gradual decay -->
+            <path d="M4,170 C20,168 38,156 55,136 C72,116 88,94 105,78 C115,67 126,58 138,52 C150,46 162,44 174,45 C186,46 196,51 208,61 C220,72 230,86 244,104 C258,122 274,140 300,156 C326,167 350,170 376,170" fill="none" stroke="#d4a847" stroke-width="1.5" stroke-dasharray="5 3" opacity="0.7"/>
+            <!-- experimental — sharp narrow peak, fast decay -->
+            <path d="M4,170 C8,170 14,168 22,161 C30,152 38,134 46,108 C52,88 57,68 62,48 C67,28 70,14 74,10 C76,8 78,12 80,20 C84,36 88,60 94,86 C100,112 108,136 120,152 C136,164 158,169 200,170 C250,171 310,170 376,170" fill="rgba(126,203,106,0.07)" stroke="#7ecb6a" stroke-width="2"/>
+            <!-- endpoint markers -->
+            <line x1="70" y1="0" x2="70" y2="170" stroke="rgba(126,203,106,0.2)" stroke-width="1" stroke-dasharray="3 3"/>
+            <line x1="290" y1="0" x2="290" y2="170" stroke="rgba(212,168,71,0.18)" stroke-width="1" stroke-dasharray="3 3"/>
+          </svg>
+        </div>
+        <div class="spectrum-axis">
+          <span>0 keV</span>
+          <span style="color:var(--green);">546 — Sr-90 E₀</span>
+          <span>1500</span>
+          <span style="color:var(--amber);">2280 — Y-90 E₀</span>
+        </div>
+        <div class="spec-legend">
+          <span><span style="display:inline-block;width:16px;height:2px;background:var(--green);"></span>Experimental</span>
+          <span><span style="display:inline-block;width:14px;border-top:1.5px dashed var(--amber);"></span>Theory (no detector)</span>
+        </div>
+      </div>
+    </div>
+    <div class="stat-strip">
+      <div class="stat-cell"><div class="stat-num green">546</div><div class="stat-label">keV — Sr-90 Endpoint</div></div>
+      <div class="stat-cell"><div class="stat-num">2280</div><div class="stat-label">keV — Y-90 Endpoint</div></div>
+      <div class="stat-cell"><div class="stat-num green">8</div><div class="stat-label">Free Parameters Fit</div></div>
+      <div class="stat-cell"><div class="stat-num amber">2.49</div><div class="stat-label">χ²ν Reduced Chi-Squared</div></div>
+      <div class="stat-cell"><div class="stat-num">4×</div><div class="stat-label">Source Runs Averaged</div></div>
+    </div>
+  </section>
+ 
+  <!-- ABSTRACT -->
+  <section id="abstract">
+    <div class="abstract-rail">
+      <div class="rail-block"><p class="rail-block-label">Course</p><p class="rail-block-val">NE 104 · Radiation Measurement Lab</p></div>
+      <div class="rail-block"><p class="rail-block-label">Source</p><p class="rail-block-val">⁹⁰Sr → ⁹⁰Y → ⁹⁰Zr<br/>0.5 μCi, sealed source (2013)</p></div>
+      <div class="rail-block"><p class="rail-block-label">Detector</p><p class="rail-block-val">CsI Scintillation Crystal</p></div>
+      <div class="rail-block"><p class="rail-block-label">Keywords</p>
+        <div class="keyword-list">
+          <span class="keyword">Beta Decay</span>
+          <span class="keyword">Fermi Function</span>
+          <span class="keyword">Detector Response</span>
+          <span class="keyword">Secular Equilibrium</span>
+          <span class="keyword">Least Squares Fit</span>
+        </div>
+      </div>
+      <div class="rail-block"><p class="rail-block-label">Code</p><p class="rail-block-val" style="font-size:0.68rem;"><a href="https://github.com/gabe6295/E11aga" style="color:var(--green);text-decoration:none;">github.com/gabe6295/E11aga</a></p></div>
+    </div>
+    <div class="abstract-body">
+      <div class="section-tag">01 — Abstract</div>
+      <h2>The Shape of<br/>What We See</h2>
+      <div class="abstract-text">
+        <p>Beta decay theory predicts a smooth, broad spectrum. What a real detector measures is something else entirely — reshaped by physics that has nothing to do with the nucleus.</p>
+        <p>This report investigates how a CsI scintillation detector modifies the observed β⁻ spectrum of an Sr-90/Y-90 source, and whether a detector response model can quantitatively bridge first-principles theory and experimental measurement.</p>
+        <p>The answer: yes — but the detector effects are dramatic. The observed spectrum is governed almost entirely by instrument physics. Three mechanisms explain the discrepancy: finite energy resolution, incomplete energy deposition, and a sharp efficiency rolloff above ~514 keV. A semi-empirical model incorporating all three achieves χ²ν = 2.49 over the range 20–1200 keV.</p>
+      </div>
+    </div>
+  </section>
+ 
+  <!-- KEY FINDINGS -->
+  <section id="findings">
+    <div class="findings-header">
+      <div class="section-tag">02 — Results</div>
+      <h2>Key Findings</h2>
+    </div>
+    <div class="finding-row open" onclick="toggleFinding(this)">
+      <div class="finding-row-head">
+        <span class="finding-index">F-01</span>
+        <span class="finding-title">The detector dominates the spectrum shape</span>
+        <span class="finding-toggle">+</span>
+      </div>
+      <div class="finding-body"><div class="finding-body-inner">Without any detector corrections, theory predicts a broad peak near 700 keV extending to 2280 keV. The experiment shows a narrow peak at 150–200 keV with rapid falloff. This apparent contradiction is entirely explained by detector physics — not nuclear physics. An analyst ignoring these effects could draw completely wrong conclusions about isotope identity or activity.</div></div>
+    </div>
+    <div class="finding-row" onclick="toggleFinding(this)">
+      <div class="finding-row-head">
+        <span class="finding-index">F-02</span>
+        <span class="finding-title">High-energy electrons are redistributed downward</span>
+        <span class="finding-toggle">+</span>
+      </div>
+      <div class="finding-body"><div class="finding-body-inner">Y-90 emits electrons from 546 keV to 2280 keV, but most escape the crystal before full energy deposition — via electron escape, backscattering, or bremsstrahlung. Each event records in a lower bin than the true emission energy. The exponential tail (λ₀ = 1.901 keV, λ₁ = 0.2001) captures this redistribution. Y-90 electrons are the primary contributors to the apparent low-energy peak.</div></div>
+    </div>
+    <div class="finding-row" onclick="toggleFinding(this)">
+      <div class="finding-row-head">
+        <span class="finding-index">F-03</span>
+        <span class="finding-title">Detection probability drops sharply above 514 keV</span>
+        <span class="finding-toggle">+</span>
+      </div>
+      <div class="finding-body"><div class="finding-body-inner">Ec = 513.6 keV with n = 2.904 means detection probability falls to ~50% at 514 keV, continuing steeply above that. This is consistent with electron mean free path in CsI — higher-energy electrons travel farther and are more likely to exit before stopping. Combined with energy redistribution, Y-90 events are both shifted to lower bins and less likely to register full-energy signals.</div></div>
+    </div>
+    <div class="finding-row" onclick="toggleFinding(this)">
+      <div class="finding-row-head">
+        <span class="finding-index">F-04</span>
+        <span class="finding-title">Gaussian broadening washes out the Sr-90 endpoint</span>
+        <span class="finding-toggle">+</span>
+      </div>
+      <div class="finding-body"><div class="finding-body-inner">The baseline resolution σ₀ = 85.56 keV is large relative to the Sr-90 endpoint at 546 keV. At 1000 keV, fractional broadening (σ_frac = 0.2448) alone adds ~245 keV of Gaussian width — so no distinct spectral feature is visible at the Sr-90 endpoint. This is a known property of CsI scintillators, which have relatively low light yield compared to semiconductor detectors.</div></div>
+    </div>
+  </section>
+ 
+  <!-- FITTED PARAMETERS -->
+  <section id="parameters">
+    <div class="params-header">
+      <div class="section-tag">03 — Model Parameters</div>
+      <h2>Best-Fit Values</h2>
+      <p style="font-size:0.72rem;color:var(--muted);margin-top:-1rem;">Nonlinear least squares · 20–1200 keV · Poisson-weighted residuals · Scroll →</p>
+    </div>
+    <div class="param-scroll">
+      <div class="param-cards">
+        <div class="param-card"><div class="param-symbol">σ₀</div><div class="param-value">85.56</div><div class="param-unit">keV</div><div class="param-desc">Baseline Gaussian broadening from electronic noise and scintillation fluctuations</div><div class="param-bar" style="width:65%"></div></div>
+        <div class="param-card"><div class="param-symbol">σ_frac</div><div class="param-value">0.245</div><div class="param-unit">dimensionless</div><div class="param-desc">Fractional energy-dependent broadening (~25%); resolution degrades at higher E</div><div class="param-bar" style="width:40%"></div></div>
+        <div class="param-card"><div class="param-symbol">f₀</div><div class="param-value">≈ 0</div><div class="param-unit">6.46 × 10⁻³⁶</div><div class="param-desc">Constant tail fraction — Gaussian response dominates at low energies</div><div class="param-bar" style="width:3%"></div></div>
+        <div class="param-card"><div class="param-symbol">f₁</div><div class="param-value">2.0</div><div class="param-unit">dimensionless</div><div class="param-desc">Strong energy-dependent tail; high-E electrons increasingly likely to escape</div><div class="param-bar" style="width:80%"></div></div>
+        <div class="param-card"><div class="param-symbol">λ₀</div><div class="param-value">1.901</div><div class="param-unit">keV</div><div class="param-desc">Constant energy-loss scale — minimal energy loss near threshold</div><div class="param-bar" style="width:20%"></div></div>
+        <div class="param-card"><div class="param-symbol">λ₁</div><div class="param-value">0.200</div><div class="param-unit">dimensionless</div><div class="param-desc">~20% energy-dependent loss; higher-E electrons deposit less before detection</div><div class="param-bar" style="width:35%"></div></div>
+        <div class="param-card" style="border-color:rgba(212,168,71,0.25)"><div class="param-symbol" style="color:var(--amber)">E_c</div><div class="param-value" style="color:var(--amber)">513.6</div><div class="param-unit">keV</div><div class="param-desc">50% efficiency cutoff — detection drops sharply above this critical energy</div><div class="param-bar" style="width:55%;background:var(--amber)"></div></div>
+        <div class="param-card" style="border-color:rgba(212,168,71,0.25)"><div class="param-symbol" style="color:var(--amber)">n</div><div class="param-value" style="color:var(--amber)">2.904</div><div class="param-unit">dimensionless</div><div class="param-desc">Sigmoid steepness of efficiency rolloff above E_c</div><div class="param-bar" style="width:70%;background:var(--amber)"></div></div>
+      </div>
+    </div>
+  </section>
+ 
+  <!-- INTERACTIVE EXPLORER -->
+  <section id="explorer">
+    <div class="section-tag">04 — Interactive</div>
+    <h2>Spectrum Explorer</h2>
+    <p style="font-size:0.72rem;color:var(--muted);margin-top:-1rem;margin-bottom:0;">Drag the sliders to see how detector parameters reshape the measured spectrum.</p>
+    <div class="explorer-grid">
+      <div class="explorer-canvas">
+        <svg id="explorer-svg" viewBox="0 0 600 280">
+          <line x1="40" y1="10" x2="40" y2="260" stroke="rgba(180,210,140,0.15)" stroke-width="1"/>
+          <line x1="40" y1="260" x2="590" y2="260" stroke="rgba(180,210,140,0.15)" stroke-width="1"/>
+          <line x1="0" y1="65" x2="600" y2="65" stroke="rgba(180,210,140,0.06)" stroke-width="1"/>
+          <line x1="0" y1="130" x2="600" y2="130" stroke="rgba(180,210,140,0.06)" stroke-width="1"/>
+          <line x1="0" y1="195" x2="600" y2="195" stroke="rgba(180,210,140,0.06)" stroke-width="1"/>
+          <path id="ex-theory" d="M 45 258 C 65 256 90 248 115 232 C 140 216 165 195 190 177 C 210 162 230 150 250 142 C 270 134 290 130 310 132 C 330 134 350 142 370 155 C 390 168 415 188 445 210 C 475 230 510 248 555 256 L 590 258" fill="none" stroke="#d4a847" stroke-width="1.5" stroke-dasharray="6 3" opacity="0.6"/>
+          <path id="ex-exp" fill="rgba(126,203,106,0.08)" stroke="#7ecb6a" stroke-width="2"/>
+          <line id="ec-line" x1="250" y1="10" x2="250" y2="260" stroke="rgba(212,168,71,0.3)" stroke-width="1" stroke-dasharray="4 3"/>
+          <text id="ec-label" x="253" y="22" fill="#d4a847" font-family="Space Mono,monospace" font-size="9" opacity="0.8">Ec</text>
+          <text x="45" y="274" fill="#6a7d5e" font-family="Space Mono,monospace" font-size="9">0</text>
+          <text x="182" y="274" fill="#6a7d5e" font-family="Space Mono,monospace" font-size="9">546 keV</text>
+          <text x="375" y="274" fill="#6a7d5e" font-family="Space Mono,monospace" font-size="9">1500</text>
+          <text x="525" y="274" fill="#6a7d5e" font-family="Space Mono,monospace" font-size="9">2280</text>
+        </svg>
+      </div>
+      <div class="explorer-controls">
+        <div>
+          <div class="control-label">Efficiency Cutoff E_c <span id="ec-val">514 keV</span></div>
+          <input type="range" min="100" max="900" value="514" id="ec-slider" oninput="updateExplorer()">
+        </div>
+        <div>
+          <div class="control-label">Resolution σ₀ <span id="sigma-val">85 keV</span></div>
+          <input type="range" min="10" max="250" value="85" id="sigma-slider" oninput="updateExplorer()">
+        </div>
+        <div>
+          <div class="control-label">Rolloff Steepness n <span id="n-val">2.9</span></div>
+          <input type="range" min="10" max="80" value="29" id="n-slider" oninput="updateExplorer()">
+        </div>
+        <div>
+          <div class="control-label" style="margin-bottom:0.3rem;">Show layers</div>
+          <div class="control-toggles">
+            <button class="toggle-btn active" id="btn-exp" onclick="toggleLayer('exp')">● Experimental</button>
+            <button class="toggle-btn active" id="btn-theory" onclick="toggleLayer('theory')">● Theory (no detector)</button>
+          </div>
+        </div>
+        <p style="font-size:0.6rem;color:var(--muted);line-height:1.5;">Lower E_c = sharper high-energy cutoff. Higher σ₀ = broader peak smearing. The fitted values (E_c = 514, σ₀ = 86, n = 2.9) are the defaults.</p>
+      </div>
+    </div>
+  </section>
+ 
+  <!-- METHOD -->
+  <section id="method">
+    <div class="method-left">
+      <div class="section-tag">05 — Procedure</div>
+      <h2>Method</h2>
+      <div class="method-steps">
+        <div class="method-step">
+          <div class="step-num">Step 01</div>
+          <div class="step-title">Theoretical Spectra</div>
+          <p class="step-desc">Relativistic beta spectra for Sr-90 and Y-90 constructed using the exact Fermi function F(Z,E), solving the Dirac equation in a Coulomb potential with finite nuclear size. Combined under secular equilibrium: N_true = N_Sr + N_Y.</p>
+        </div>
+        <div class="method-step">
+          <div class="step-num">Step 02</div>
+          <div class="step-title">Data Collection</div>
+          <p class="step-desc">Four 900-second source runs (Spectra 0–3) plus one background run with a CsI scintillator placed directly on the Sr-90 source to maximize solid-angle coverage. All four spectra averaged; background subtracted to produce N_exp(E).</p>
+        </div>
+        <div class="method-step">
+          <div class="step-num">Step 03</div>
+          <div class="step-title">Response Model Construction</div>
+          <p class="step-desc">Three-component semi-empirical model: Gaussian resolution R_Gauss, exponential energy-loss tail R_tail, and efficiency rolloff ε(E'). Blended via f(E') = f₀ + f₁·(E'/E₀). Full convolution: N_det(E) = ∫ ε(E')·R(E,E')·N_true(E') dE'.</p>
+        </div>
+        <div class="method-step">
+          <div class="step-num">Step 04</div>
+          <div class="step-title">Nonlinear Least Squares Fit</div>
+          <p class="step-desc">8 free parameters fit over 20–1200 keV using scipy.optimize.least_squares with Poisson-weighted residuals: r_i = [N_model – N_exp] / √(N_exp + 1). Model normalized to match total experimental counts per iteration.</p>
+        </div>
+      </div>
+    </div>
+    <div class="method-right">
+      <div class="section-tag">Model Equations</div>
+      <div style="height:0.8rem;"></div>
+      <div class="equation-block">
+        <p class="eq-label">Full detector convolution</p>
+        <div class="eq-body">N_det(E) = ∫ ε(E') · R(E,E') · N_true(E') dE'</div>
+      </div>
+      <div class="equation-block">
+        <p class="eq-label">Mixed response function</p>
+        <div class="eq-body">R(E,E') = [1 − f(E')] · R_Gauss + f(E') · R_tail<br/>f(E') = f₀ + f₁·(E'/E₀)</div>
+      </div>
+      <div class="equation-block">
+        <p class="eq-label">Detection efficiency</p>
+        <div class="eq-body">ε(E') = 1 / [1 + (E'/E_c)ⁿ]</div>
+      </div>
+      <div class="component-list">
+        <div class="component">
+          <div class="component-name">Gaussian Resolution</div>
+          <p class="component-desc">Scintillation photon statistics + electronic noise. Width σ²(E') = σ₀² + (σ_frac · E')².</p>
+        </div>
+        <div class="component">
+          <div class="component-name">Energy-Loss Tail</div>
+          <p class="component-desc">Electron escape, backscattering, bremsstrahlung. Scale λ(E') = λ₀ + λ₁·E' grows with energy.</p>
+        </div>
+        <div class="component">
+          <div class="component-name">Efficiency Rolloff</div>
+          <p class="component-desc">Sigmoid cutoff at E_c = 514 keV. Higher-E electrons more likely to exit before full deposition.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+ 
+  <!-- LIMITATIONS -->
+  <section id="limitations">
+    <div class="section-tag">06 — Systematic Uncertainties</div>
+    <h2>Limitations</h2>
+    <div class="limitations-list">
+      <div class="lim-item"><div class="lim-code">SYS-01</div><div class="lim-title">Single Background Trial</div><p class="lim-desc">One background spectrum vs. four source spectra — asymmetric Poisson uncertainty in subtraction. Future work: average 4+ background runs.</p></div>
+      <div class="lim-item"><div class="lim-code">SYS-02</div><div class="lim-title">Detector Slip (Spectrum 2)</div><p class="lim-desc">Detector briefly slipped off source during run 2, reducing solid angle and count rate. Trial retained since spectral shape remained consistent.</p></div>
+      <div class="lim-item"><div class="lim-code">SYS-03</div><div class="lim-title">Low-Energy Mismatch (E &lt; 100 keV)</div><p class="lim-desc">Model underestimates counts below 100 keV. Threshold pile-up, noise events, and multiple scattering not explicitly modeled — primary driver of elevated χ²ν.</p></div>
+      <div class="lim-item"><div class="lim-code">SYS-04</div><div class="lim-title">Semi-Empirical Response</div><p class="lim-desc">Functional forms are physically motivated but not derived from first principles. A GEANT4 simulation would model detector geometry, crystal dimensions, and angular dependence explicitly.</p></div>
+      <div class="lim-item"><div class="lim-code">SYS-05</div><div class="lim-title">Energy Calibration Uncertainty</div><p class="lim-desc">Bin-to-energy conversion relies on a separate calibration. Systematic error shifts all energy values. Independent mono-energetic sources would eliminate this.</p></div>
+      <div class="lim-item"><div class="lim-code">SYS-06</div><div class="lim-title">No Angular Dependence</div><p class="lim-desc">Model assumes isotropic electron incidence. Angular distribution and angle-dependent escape probability not modeled — a more rigorous treatment would incorporate geometric factors.</p></div>
+    </div>
+  </section>
+ 
+  <!-- CONCLUSION -->
+  <section id="conclusion">
+    <div class="conclusion-body">
+      <div class="section-tag">07 — Conclusion</div>
+      <h2>The Instrument<br/>Is the Message</h2>
+      <div class="conclusion-text">
+        <p>The experimentally observed beta spectrum of an Sr-90/Y-90 source looks nothing like its first-principles prediction. But this is not a failure of nuclear theory — it is a success of detector characterization.</p>
+        <p>Three physical processes account for the entire discrepancy: finite energy resolution, incomplete energy deposition, and a detection efficiency that drops to 50% at 514 keV. By incorporating these into a semi-empirical forward model and fitting 8 free parameters by nonlinear least squares, strong agreement is achieved over 20–1200 keV with χ²ν = 2.49.</p>
+        <p>The fitted parameters are all physically meaningful and consistent with known CsI properties. The central conclusion: the observed spectrum is governed almost entirely by detector physics. Correctly interpreting radiation measurements requires understanding — and modeling — the instrument itself.</p>
+      </div>
+    </div>
+    <div class="conclusion-side">
+      <div class="chi-sq">
+        <p class="chi-label">Reduced Chi-Squared</p>
+        <div class="chi-value">2.49</div>
+        <p class="chi-unit">20 – 1200 keV fit range</p>
+      </div>
+      <div class="links-block">
+        <p style="font-size:0.58rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);margin-bottom:0.3rem;">Resources</p>
+        <a href="BetaDecayReport.pdf" class="link-row" download>↓ &nbsp;Full Report PDF</a>
+        <a href="https://github.com/gabe6295/E11aga" class="link-row" target="_blank" rel="noopener">→ &nbsp;Analysis Code · GitHub</a>
+        <a href="index.html#projects" class="link-row">← &nbsp;All Projects</a>
+      </div>
+    </div>
+  </section>
+ 
+  <footer>
+    <span>© 2026 Alana Baker</span>
+    <span>β⁻ Decay Spectra · Sr-90/Y-90 · May 2026</span>
+    <span>Nuclear Engineering · UC Berkeley</span>
+  </footer>
+ 
+  <script>
+    function toggleFinding(row) {
+      const isOpen = row.classList.contains('open');
+      document.querySelectorAll('.finding-row').forEach(r => r.classList.remove('open'));
+      if (!isOpen) row.classList.add('open');
+    }
+ 
+    const layers = { exp: true, theory: true };
+    function toggleLayer(id) {
+      layers[id] = !layers[id];
+      document.getElementById('btn-' + id).classList.toggle('active', layers[id]);
+      if (id === 'exp') document.getElementById('ex-exp').style.opacity = layers.exp ? '1' : '0';
+      if (id === 'theory') document.getElementById('ex-theory').style.opacity = layers.theory ? '0.6' : '0';
+    }
+ 
+    function updateExplorer() {
+      const ec  = parseInt(document.getElementById('ec-slider').value);
+      const sig = parseInt(document.getElementById('sigma-slider').value);
+      const n   = parseInt(document.getElementById('n-slider').value) / 10;
+      document.getElementById('ec-val').textContent    = ec + ' keV';
+      document.getElementById('sigma-val').textContent = sig + ' keV';
+      document.getElementById('n-val').textContent     = n.toFixed(1);
+ 
+      const ecX = 45 + ((ec - 100) / 800) * 535;
+      document.getElementById('ec-line').setAttribute('x1', ecX);
+      document.getElementById('ec-line').setAttribute('x2', ecX);
+      document.getElementById('ec-label').setAttribute('x', ecX + 3);
+ 
+      const pts = [];
+      for (let i = 0; i <= 100; i++) {
+        const frac = i / 100;
+        const x    = 45 + frac * 535;
+        const keV  = frac * 2280;
+        const srShape = keV < 546 ? Math.pow(keV / 546, 0.6) * Math.pow(1 - keV / 546, 1.4) : 0;
+        const yShape  = Math.pow(keV / 2280, 0.5) * Math.pow(Math.max(0, 1 - keV / 2280), 1.5);
+        let base = (srShape + yShape);
+        const eff = 1 / (1 + Math.pow(Math.max(0.001, keV) / ec, n));
+        base *= eff;
+        const sigNorm  = sig / 546;
+        const peakAt   = 0.08 + sigNorm * 0.35;
+        const peakWide = 0.04 + sigNorm * 0.18;
+        const smeared  = base * 1.4 * Math.exp(-Math.pow(frac - peakAt, 2) / (2 * peakWide * peakWide));
+        const y = 250 - Math.min(230, smeared * 400);
+        pts.push(i === 0 ? `M ${x.toFixed(1)} ${y.toFixed(1)}` : `L ${x.toFixed(1)} ${y.toFixed(1)}`);
+      }
+      pts.push('L 590 260 L 45 260 Z');
+      document.getElementById('ex-exp').setAttribute('d', pts.join(' '));
+    }
+    updateExplorer();
+  </script>
+ 
 </body>
 </html>
