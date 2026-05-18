@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>β⁻ Decay Spectra — Alana Baker</title>
+  <title>Alana's Portfolio</title>
   <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;700;800&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
   <link rel="icon" type="image/png" href="favicon.png" />
  
@@ -23,13 +23,13 @@
       --red:    #d65136;
     }
  
-    html { scroll-behavior: smooth; }
+    html { scroll-behavior: smooth; font-size: 125%; }
  
     body {
       background: var(--bg);
       color: var(--text);
       font-family: 'Space Mono', monospace;
-      font-size: 14px;
+
       line-height: 1.7;
       overflow-x: hidden;
     }
@@ -61,10 +61,10 @@
     nav ul a:hover { color: var(--green); }
  
     /* ── HERO ── */
-    #hero { padding-top: 56px; min-height: 100vh; display: flex; flex-direction: column; }
+    #hero { padding-top: 4rem; min-height: 100vh; display: flex; flex-direction: column; }
  
     .hero-top {
-      flex: 1; display: grid; grid-template-columns: 1fr 420px;
+      flex: 1; display: grid; grid-template-columns: 1fr 30rem;
       border-bottom: 1px solid var(--border);
     }
  
@@ -115,7 +115,7 @@
     /* ── SPECTRUM PANEL ── */
     .hero-spectrum { padding: 2rem; display: flex; flex-direction: column; justify-content: flex-end; }
     .spectrum-label { font-size: 0.6rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin-bottom: 1rem; }
-    .spectrum-canvas { width: 100%; height: 180px; }
+    .spectrum-canvas { width: 100%; height: 12rem; }
     #spec-svg { width: 100%; height: 100%; }
     .spectrum-axis { display: flex; justify-content: space-between; margin-top: 0.4rem; font-size: 0.58rem; color: var(--muted); }
     .spec-legend { display: flex; gap: 1.2rem; margin-top: 1rem; font-size: 0.6rem; color: var(--muted); }
@@ -137,7 +137,7 @@
     h2 { font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(1.8rem, 4vw, 2.8rem); line-height: 1; letter-spacing: -0.01em; color: #fff; margin-bottom: 2rem; }
  
     /* ── ABSTRACT ── */
-    #abstract { display: grid; grid-template-columns: 260px 1fr; border-bottom: 1px solid var(--border); }
+    #abstract { display: grid; grid-template-columns: 18rem 1fr; border-bottom: 1px solid var(--border); }
     .abstract-rail { padding: 3rem 1.8rem; border-right: 1px solid var(--border); }
     .rail-block { margin-bottom: 2rem; }
     .rail-block-label { font-size: 0.58rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.5rem; }
@@ -153,14 +153,14 @@
     .findings-header { padding: 3rem 3rem 2rem; }
     .finding-row { border-top: 1px solid var(--border); cursor: pointer; transition: background 0.2s; }
     .finding-row:hover { background: rgba(126,203,106,0.03); }
-    .finding-row-head { display: grid; grid-template-columns: 56px 1fr auto; align-items: center; gap: 1.5rem; padding: 1.4rem 3rem; }
+    .finding-row-head { display: grid; grid-template-columns: 4rem 1fr auto; align-items: center; gap: 1.5rem; padding: 1.4rem 3rem; }
     .finding-index { font-family: 'Syne', sans-serif; font-size: 0.65rem; font-weight: 800; color: var(--green2); letter-spacing: 0.1em; }
     .finding-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1rem; color: #fff; }
     .finding-toggle { font-size: 1.2rem; color: var(--muted); transition: transform 0.25s; line-height: 1; user-select: none; }
     .finding-body { max-height: 0; overflow: hidden; transition: max-height 0.35s ease; }
     .finding-body-inner { padding: 0 3rem 1.8rem 7.5rem; font-size: 0.82rem; color: var(--muted); line-height: 1.75; max-width: 72ch; }
     .finding-row.open .finding-toggle { transform: rotate(45deg); }
-    .finding-row.open .finding-body { max-height: 300px; }
+    .finding-row.open .finding-body { max-height: 25rem; }
  
     /* ── PARAMETERS ── */
     #parameters { border-bottom: 1px solid var(--border); }
@@ -169,7 +169,7 @@
     .param-scroll { overflow-x: auto; padding: 0 3rem 3rem; }
     #noscroll {position: absolute;right: 1rem;bottom: 0.6rem;margin: 0;font-size: x-large;pointer-events: none; }
     .param-cards { display: flex; gap: 0; min-width: max-content; }
-    .param-card { border: 1px solid var(--border); border-right: none; padding: 1.5rem 1.8rem; min-width: 165px; position: relative; transition: background 0.2s; }
+    .param-card { border: 1px solid var(--border); border-right: none; padding: 1.5rem 1.8rem; min-width: 12rem; position: relative; transition: background 0.2s; }
     .param-card:last-child { border-right: 1px solid var(--border); }
     .param-card:hover { background: rgba(126,203,106,0.04); }
     .param-symbol { font-family: 'Space Mono', monospace; font-size: 1.1rem; color: var(--green); margin-bottom: 0.5rem; }
@@ -180,8 +180,8 @@
  
     /* ── INTERACTIVE EXPLORER ── */
     #explorer { border-bottom: 1px solid var(--border); padding: 3rem; }
-    .explorer-grid { display: grid; grid-template-columns: 1fr 300px; gap: 2rem; margin-top: 2rem; }
-    .explorer-canvas { position: relative; height: 300px; border: 1px solid var(--border); }
+    .explorer-grid { display: grid; grid-template-columns: 1fr 22rem; gap: 2rem; margin-top: 2rem; }
+    .explorer-canvas { position: relative; height: 22rem; border: 1px solid var(--border); }
     #explorer-svg { width: 100%; height: 100%; }
     .explorer-controls { display: flex; flex-direction: column; gap: 1.4rem; }
     .control-label { font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.5rem; display: flex; justify-content: space-between; }
@@ -219,7 +219,7 @@
     .lim-desc { font-size: 0.72rem; color: var(--muted); line-height: 1.6; }
  
     /* ── CONCLUSION ── */
-    #conclusion { border-bottom: 1px solid var(--border); display: grid; grid-template-columns: 1fr 280px; }
+    #conclusion { border-bottom: 1px solid var(--border); display: grid; grid-template-columns: 1fr 20rem; }
     .conclusion-body { padding: 3rem; border-right: 1px solid var(--border); }
     .conclusion-text { font-family: 'DM Serif Display', serif; font-size: 1.05rem; color: var(--text); line-height: 1.75; max-width: 56ch; }
     .conclusion-text p + p { margin-top: 1.2rem; }
