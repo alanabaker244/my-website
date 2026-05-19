@@ -12,6 +12,7 @@
  
     :root {
       --bg:     #373733;
+      --lbg:    #303530;
       --panel:  #55585c;
       --border: #94948e;
       --green:  #b0db7c;
@@ -199,7 +200,7 @@
     .step-num { font-size: 0.58rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--green2); margin-bottom: 0.3rem; }
     .step-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.88rem; color: #fff; margin-bottom: 0.4rem; }
     .step-desc { font-size: 0.75rem; color: var(--muted); line-height: 1.65; }
-    .method-right { padding: 3rem; background: var(--panel); }
+    .method-right { padding: 3rem; background: var(--lbg); }
     .equation-block { margin-bottom: 1.8rem; }
     .eq-label { font-size: 0.58rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.6rem; }
     .eq-body { font-size: 0.82rem; color: var(--green); line-height: 2; padding: 1rem 1.2rem; border: 1px solid rgba(126,203,106,0.15); background: rgba(126,203,106,0.03); }
@@ -457,7 +458,7 @@
       <div class="explorer-controls">
         <div>
           <div class="control-label">
-            <p>EFFICIENCY CUTTOFF E<sub>c</sub></p> 
+            <p>EFFICIENCY CUTOFF E<sub>c</sub></p> 
             <span id="ec-val">514 keV</span></div>
           <input type="range" min="50" max="1000" value="514" id="ec-slider" oninput="updateExplorer()">
         </div>
@@ -473,6 +474,7 @@
             <span id="n-val">2.9</span></div>
           <input type="range" min="10" max="80" value="29" id="n-slider" oninput="updateExplorer()">
         </div>
+        <button class="toggle-btn" id="btn-reset" onclick="resetExplorer()" style="margin-top:0.3rem;border-color:var(--amber);color:var(--amber);">↺ &nbsp;Reset to defaults</button>
         <div>
           <div class="control-label" style="margin-bottom:0.3rem;">Show layers</div>
           <div class="control-toggles">
@@ -485,7 +487,7 @@
           <br>Higher σ<sub>0</sub> = broader smearing of the peak.
           <br> Larger N &#8203; = steeper peak transitional rolloff. 
           <br>
-          <br>The fitted values (E<sub>c</sub> = 514, σ<sub>0</sub> = 86, n = 2.9) are the defaults. Note that there are 5 more free variables we 
+          <br> Note that the efficiency cutoff of the detector is an inherent property of electrons in CsI detectors, and is treated as an intrinsic free parameter rather than a manipulable one.
         </p>
       </div>
     </div>
@@ -499,23 +501,23 @@
       <div class="method-steps">
         <div class="method-step">
           <div class="step-num">Step 01</div>
-          <div class="step-title">Theoretical Spectra</div>
-          <p class="step-desc">Relativistic beta spectra for Sr-90 and Y-90 constructed using the exact Fermi function F(Z,E), solving the Dirac equation in a Coulomb potential with finite nuclear size. Combined under secular equilibrium: N_true = N_Sr + N_Y.</p>
+          <div class="step-title">Making the theoretical spectra</div>
+          <p class="step-desc">The relativistic effects in the beta spectra are constructed using the Fermi function F(Z,E), and by solving the Dirac equation in a Coulomb potential with finite nuclear size. When combined under secular equilibrium, we get that  N<sub>true</sub> = N<sub>Sr</sub> + N<sub>Y</sub>.</p>
         </div>
         <div class="method-step">
           <div class="step-num">Step 02</div>
-          <div class="step-title">Data Collection</div>
-          <p class="step-desc">Four 900-second source runs (Spectra 0–3) plus one background run with a CsI scintillator placed directly on the Sr-90 source to maximize solid-angle coverage. All four spectra averaged; background subtracted to produce N_exp(E).</p>
+          <div class="step-title">The Data Collection</div>
+          <p class="step-desc">Four 900s source runs and a control run with a CsI scintillator placed directly on the Sr-90 source to maximize the solid-angle coverage. All four spectra were then averaged, and the background subtracted to produce N<sub>exp</sub>(E).</p>
         </div>
         <div class="method-step">
           <div class="step-num">Step 03</div>
           <div class="step-title">Response Model Construction</div>
-          <p class="step-desc">Three-component semi-empirical model: Gaussian resolution R_Gauss, exponential energy-loss tail R_tail, and efficiency rolloff ε(E'). Blended via f(E') = f₀ + f₁·(E'/E₀). Full convolution: N_det(E) = ∫ ε(E')·R(E,E')·N_true(E') dE'.</p>
+          <p class="step-desc">We create a three section semi-empirical model: the Gaussian resolution [R<sub>Gauss</sub>], the exponential energy-loss tail [R<sub>tail</sub>], and efficiency rolloff ε(E'). These are then blended via f(E') = f₀ + f₁·(E'/E₀) to get the full equation : N<sub>det</sub>(E) = ∫ ε(E') · R(E,E') · N<sub>true</sub>(E') dE'.</p>
         </div>
         <div class="method-step">
           <div class="step-num">Step 04</div>
           <div class="step-title">Nonlinear Least Squares Fit</div>
-          <p class="step-desc">8 free parameters fit over 20–1200 keV using scipy.optimize.least_squares with Poisson-weighted residuals: r_i = [N_model – N_exp] / √(N_exp + 1). Model normalized to match total experimental counts per iteration.</p>
+          <p class="step-desc">We then create 8 free parameters to represent our sections, and fit it over 20–1200 keV using scipy.optimize.least_squares with Poisson-weighted residuals : r<sub>i</sub> = [N<sub>i</sub> – N<sub>exp</sub>] / √(N<sub>exp</sub> + 1). The model is then normalized to appropriately match the total experimental counts per iteration.</p>
         </div>
       </div>
     </div>
@@ -524,28 +526,28 @@
       <div style="height:0.8rem;"></div>
       <div class="equation-block">
         <p class="eq-label">Full detector convolution</p>
-        <div class="eq-body">N_det(E) = ∫ ε(E') · R(E,E') · N_true(E') dE'</div>
+        <div class="eq-body">N<sub>det</sub>(E) = ∫ ε(E') · R(E,E') · N<sub>true</sub>(E') dE'</div>
       </div>
       <div class="equation-block">
-        <p class="eq-label">Mixed response function</p>
-        <div class="eq-body">R(E,E') = [1 − f(E')] · R_Gauss + f(E') · R_tail<br/>f(E') = f₀ + f₁·(E'/E₀)</div>
+        <p class="eq-label">Mixed response functions</p>
+        <div class="eq-body">R(E,E') = [1 − f(E')] · R<sub>Gauss</sub> + f(E') · R<sub>tail</sub>;<br/>  f(E') = f₀ + f₁·(E'/E₀)</div>
       </div>
       <div class="equation-block">
         <p class="eq-label">Detection efficiency</p>
-        <div class="eq-body">ε(E') = 1 / [1 + (E'/E_c)ⁿ]</div>
+        <div class="eq-body">ε(E') = 1 / [1 + (E' / E<sub>c</sub>)<sup>n</sup>]</div>
       </div>
       <div class="component-list">
         <div class="component">
           <div class="component-name">Gaussian Resolution</div>
-          <p class="component-desc">Scintillation photon statistics + electronic noise. Width σ²(E') = σ₀² + (σ_frac · E')².</p>
+          <p class="component-desc">Goverened mainly by scintillation photon statistics & electronic noise. Width of σ²(E') = σ₀² + (σ<sub>frac</sub> · E')<sup>2</sup>.</p>
         </div>
         <div class="component">
           <div class="component-name">Energy-Loss Tail</div>
-          <p class="component-desc">Electron escape, backscattering, bremsstrahlung. Scale λ(E') = λ₀ + λ₁·E' grows with energy.</p>
+          <p class="component-desc">Due to electron escape, backscattering, and bremsstrahlung. Scale of λ(E') = λ₀ + λ₁·E', which grows with energy.</p>
         </div>
         <div class="component">
           <div class="component-name">Efficiency Rolloff</div>
-          <p class="component-desc">Sigmoid cutoff at E_c = 514 keV. Higher-E electrons more likely to exit before full deposition.</p>
+          <p class="component-desc">Sigmoid cutoff at E<sub>C</sub> = 514 keV. Higher energy electrons more likely to exit before full deposition.</p>
         </div>
       </div>
     </div>
@@ -631,16 +633,18 @@
 
       for (let i = 0; i <= 1000; i++) {
         const frac = i / 1000;        // smoothness
-        const x = 22 + frac * 520;    // starting value for x [initial and x-scale]
+        const x = 22 + frac * 520 ;    // starting value for x [initial and x-scale]
 
         if (x < leftBoundary) continue;
 
-        const keV  = frac * 3000;
-        const srShape = keV < 546 ? Math.pow(keV / 546, 0.6) * Math.pow((1 - keV / 546), 1.8) : 0;  // inverted rolloff steepness, Sr only
-        const yShape  = Math.pow(keV / 3000, 0.5) * Math.pow(Math.max(0, 1 - keV / 3000), 1.4);   // inverted rolloff steepness, total
+        const keV = frac * 3000;
+        const srShape = keV < 546 ? Math.pow(keV / 546, 0.6) * Math.pow((1 - keV / 546), 1.8) : 0;
+        const yShape  = Math.pow(keV / 3000, 0.5) * Math.pow(Math.max(0, 1 - keV / 3000), 1.4);
         let base = (srShape + yShape);
-        const eff = 1 / (1 + Math.pow(Math.max(0.001, keV) / ec, n));
-        base *= eff;
+        const gate = 1 / (1 + Math.exp(-(keV - ec) / 50)); 
+        const effectiveN = gate * n;                           
+        const eff = 1 / (1 + Math.pow(Math.max(0.001, keV) / ec, effectiveN));
+        base *= eff * 1.8;
         const sigNorm  = sig / 546;
         const peakAt   = 0.08 + sigNorm * 0.15; // change peak value , peak in data ~125 keV
         const peakWide = 0.02 + sigNorm * 0.30; // change peak width
@@ -662,6 +666,19 @@
       document.getElementById('ex-exp').setAttribute('d', pts.join(' '));
     }
     updateExplorer();
+
+    function resetExplorer() {
+      document.getElementById('ec-slider').value    = 514;
+      document.getElementById('sigma-slider').value = 85;
+      document.getElementById('n-slider').value     = 29;
+      if (!layers.exp)    toggleLayer('exp');
+      if (!layers.theory) toggleLayer('theory');
+      updateExplorer();
+
+      const btn = document.getElementById('btn-reset');
+      btn.classList.add('active');
+      setTimeout(() => btn.classList.remove('active'), 300);
+    }
   </script>
  
 </body>
