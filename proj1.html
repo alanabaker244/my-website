@@ -227,7 +227,7 @@
     .conclusion-side { padding: 3rem 2rem; display: flex; flex-direction: column; gap: 2rem; }
     .chi-sq { text-align: center; padding: 2rem; border: 1px solid var(--border); }
     .chi-label { font-size: 0.58rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.5rem; }
-    .chi-value { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 4rem; color: var(--amber); line-height: 1; }
+    .chi-value { font-family: 'Syne', sans-serif; font-weight: 650; font-size: 3.5rem; color: var(--amber); line-height: 1; }
     .chi-unit { font-size: 0.58rem; color: var(--muted); margin-top: 0.3rem; }
     .links-block { display: flex; flex-direction: column; gap: 0.6rem; }
     .link-row { display: flex; align-items: center; gap: 0.6rem; font-size: 0.65rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); text-decoration: none; border: 1px solid var(--border); padding: 0.6rem 0.8rem; transition: all 0.15s; }
@@ -558,12 +558,12 @@
     <div class="section-tag">06 — Systematic Uncertainties</div>
     <h2>Limitations</h2>
     <div class="limitations-list">
-      <div class="lim-item"><div class="lim-code">SYS-01</div><div class="lim-title">Single Background Trial</div><p class="lim-desc">One background spectrum vs. four source spectra — asymmetric Poisson uncertainty in subtraction. Future work: average 4+ background runs.</p></div>
-      <div class="lim-item"><div class="lim-code">SYS-02</div><div class="lim-title">Detector Slip (Spectrum 2)</div><p class="lim-desc">Detector briefly slipped off source during run 2, reducing solid angle and count rate. Trial retained since spectral shape remained consistent.</p></div>
-      <div class="lim-item"><div class="lim-code">SYS-03</div><div class="lim-title">Low-Energy Mismatch (E &lt; 100 keV)</div><p class="lim-desc">Model underestimates counts below 100 keV. Threshold pile-up, noise events, and multiple scattering not explicitly modeled — primary driver of elevated χ²ν.</p></div>
-      <div class="lim-item"><div class="lim-code">SYS-04</div><div class="lim-title">Semi-Empirical Response</div><p class="lim-desc">Functional forms are physically motivated but not derived from first principles. A GEANT4 simulation would model detector geometry, crystal dimensions, and angular dependence explicitly.</p></div>
-      <div class="lim-item"><div class="lim-code">SYS-05</div><div class="lim-title">Energy Calibration Uncertainty</div><p class="lim-desc">Bin-to-energy conversion relies on a separate calibration. Systematic error shifts all energy values. Independent mono-energetic sources would eliminate this.</p></div>
-      <div class="lim-item"><div class="lim-code">SYS-06</div><div class="lim-title">No Angular Dependence</div><p class="lim-desc">Model assumes isotropic electron incidence. Angular distribution and angle-dependent escape probability not modeled — a more rigorous treatment would incorporate geometric factors.</p></div>
+      <div class="lim-item"><div class="lim-code">LIM-01</div><div class="lim-title">Single Background Trial</div><p class="lim-desc">One background spectrum vs. four source spectra means there is an asymmetric Poisson uncertainty in subtraction. For future work, an averaged 4+ background runs would improve uncertainty.</p></div>
+      <div class="lim-item"><div class="lim-code">LIM-02</div><div class="lim-title">Detector Error in SP 2</div><p class="lim-desc">Detector was briefly removed from the source during run 2, reducing solid angle and count rate. Trial retained since spectral shape remained varily consistent.</p></div>
+      <div class="lim-item"><div class="lim-code">LIM-03</div><div class="lim-title">Low-Energy Mismatch (E &lt; 100 keV)</div><p class="lim-desc">Model underestimates counts below 100 keV. Threshold pile-up, noise events, and multiple scattering not explicitly modeled, which are all drivers of elevated χ²ν.</p></div>
+      <div class="lim-item"><div class="lim-code">LIM-04</div><div class="lim-title">Semi-Empirical Response</div><p class="lim-desc">Functional forms are physically motivated but not derived from first principles. A GEANT4 simulation would model detector geometry, crystal dimensions, and angular dependence explicitly and allow for accurate extrapolation.</p></div>
+      <div class="lim-item"><div class="lim-code">LIM-05</div><div class="lim-title">Energy Calibration Uncertainty</div><p class="lim-desc">Bin to energy conversion relies on a separate approximation, so any minor error could shift all energy values. Independent mono-energetic sources would eliminate this.</p></div>
+      <div class="lim-item"><div class="lim-code">LIM-06</div><div class="lim-title">No Angular Dependence</div><p class="lim-desc">Model assumes isotropic electron incidence, so angular distribution and angle-dependent escape probability are not modeled. A more rigorous future test would incorporate these geometric factors.</p></div>
     </div>
   </section>
  
@@ -571,11 +571,11 @@
   <section id="conclusion">
     <div class="conclusion-body">
       <div class="section-tag">07 — Conclusion</div>
-      <h2>The Instrument<br/>Is the Message</h2>
+      <h2>The Detector<br/>sends the message</h2>
       <div class="conclusion-text">
-        <p>The experimentally observed beta spectrum of an Sr-90/Y-90 source looks nothing like its first-principles prediction. But this is not a failure of nuclear theory — it is a success of detector characterization.</p>
-        <p>Three physical processes account for the entire discrepancy: finite energy resolution, incomplete energy deposition, and a detection efficiency that drops to 50% at 514 keV. By incorporating these into a semi-empirical forward model and fitting 8 free parameters by nonlinear least squares, strong agreement is achieved over 20–1200 keV with χ²ν = 2.49.</p>
-        <p>The fitted parameters are all physically meaningful and consistent with known CsI properties. The central conclusion: the observed spectrum is governed almost entirely by detector physics. Correctly interpreting radiation measurements requires understanding — and modeling — the instrument itself.</p>
+        <p>The experimentally observed beta spectrum of an Sr-90/Y-90 source enitrely different from its first-principles prediction. But rather than this being a failure of nuclear theory, this is a success of detector characterization.</p>
+        <p>Three physical processes account for the entire discrepancy, being finite energy resolution, incomplete energy deposition, and a detection efficiency dropdown. By incorporating these into a semi-empirical forward model and fitting 8 free parameters by nonlinear least squares, strong agreement is achieved over 20–1200 keV with χ²ν = 2.49.</p>
+        <p>The fitted parameters are all physically meaningful and consistent with known CsI properties. The central conclusionis this : the unfitted spectrum is governed almost entirely by detector physics. Correctly interpreting radiation measurements requires and understanding of the instrument of measurement itself.</p>
       </div>
     </div>
     <div class="conclusion-side">
