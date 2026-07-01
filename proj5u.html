@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Alana's Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;700;800&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/png" href="favicon.png" />
+ 
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+ 
+    :root {
+      --bg:     #15172b;
+      --lbg:    #1e2140;
+      --panel:  #2a2d52;
+      --border: #4a4d78;
+      --violet: #c9a6ff;
+      --violet2:#ddc6ff;
+      --gold:   #ffd9a0;
+      --pink:   #f390a2;
+      --text:   #eae6f5;
+      --muted:  #8d8fb8;
+      --paper:  #f3ede0;
+      --paper-shadow: rgba(0,0,0,0.45);
+      --nav-bg: rgba(21,23,43,0.92);
+      --accent: #c9a6ff;
+    }
+ 
+    html { scroll-behavior: smooth; font-size: 125%; }
+ 
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Space Mono', monospace;
+      line-height: 1.7;
+      overflow-x: hidden;
+      position: relative;
+    }
+ 
+    /* ── AMBIENT STARS ── */
+    .stars {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      overflow: hidden;
+      transition: opacity 0.6s ease;
+    }
+    .star {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: var(--violet2);
+      border-radius: 50%;
+      animation: twinkle 4s ease-in-out infinite;
+      opacity: 0.2;
+    }
+    .star.big { width: 3px; height: 3px; background: var(--gold); }
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.15; transform: scale(1); }
+      50% { opacity: 0.9; transform: scale(1.4); }
+    }
+ 
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 999;
+      background: repeating-linear-gradient(
+        0deg, transparent, transparent 2px,
+        rgba(0,0,0,0.04) 2px, rgba(0,0,0,0.04) 4px
+      );
+    }
+ 
+    section, nav, footer { position: relative; z-index: 1; }
+ 
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1rem 2.5rem;
+      background: var(--nav-bg);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(4px);
+    }
+    nav .logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1rem; letter-spacing: 0.06em; color: var(--accent); text-decoration: none; display: flex; align-items: center; gap: 0.5rem; }
+    nav .logo .moon { font-size: 0.9rem; }
+    nav ul { list-style: none; display: flex; gap: 2rem; }
+    nav ul a { font-family: 'Space Mono', monospace; font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+    nav ul a:hover { color: var(--accent); }
+ 
+ 
+    /* ── HERO ── */
+    #hero { padding-top: 4rem; min-height: 100vh; display: flex; flex-direction: column; }
+ 
+    .hero-top {
+      flex: 1; display: grid; grid-template-columns: 1fr 26rem;
+      border-bottom: 1px solid var(--border);
+    }
+ 
+    .hero-title-area {
+      padding: 4rem 3rem 3rem; border-right: 1px solid var(--border);
+      display: flex; flex-direction: column; justify-content: flex-end;
+    }
+ 
+    .report-label {
+      font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 1.5rem;
+      display: flex; align-items: center; gap: 0.8rem;
+    }
+    .report-label::before { content: ''; display: inline-block; width: 20px; height: 1px; background: var(--gold); }
+ 
+    h1 {
+      font-family: 'Syne', sans-serif; font-weight: 800;
+      font-size: clamp(3.2rem, 7.5vw, 6.5rem); line-height: 0.92;
+      letter-spacing: -0.01em; color: #fff; margin-bottom: 2rem;
+    }
+ 
+    .hero-byline { font-size: 0.78rem; color: var(--muted); margin-bottom: 2.5rem; line-height: 1.85; max-width: 46ch; }
+    .hero-byline strong { color: var(--text); font-weight: 400; }
+ 
+    .byline-link { color: inherit; text-decoration: underline; text-decoration-color: rgba(201,166,255,0.4); transition: color 0.2s, text-decoration-color 0.2s; }
+    .byline-link:hover { color: var(--violet); text-decoration-color: var(--violet); }
+ 
+    .cta-row { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+ 
+    .btn {
+      font-family: 'Space Mono', monospace; font-size: 0.65rem; letter-spacing: 0.14em;
+      text-transform: uppercase; text-decoration: none; padding: 0.65rem 1.4rem;
+      border: 1px solid; transition: all 0.2s; display: inline-block;
+    }
+    .btn-solid { background: var(--violet); color: var(--bg); border-color: var(--violet); }
+    .btn-solid:hover { background: var(--violet2); border-color: var(--violet2); }
+    .btn-ghost { background: transparent; color: var(--muted); border-color: var(--border); }
+    .btn-ghost:hover { color: var(--violet); border-color: rgba(201,166,255,0.4); }
+ 
+    /* ── HERO PHOTO PANEL ── */
+    .hero-photo-panel {
+      position: relative;
+      padding: 2.5rem;
+      display: flex; align-items: center; justify-content: center;
+      background: radial-gradient(ellipse at 50% 30%, rgba(201,166,255,0.08) 0%, transparent 65%);
+      overflow: hidden;
+    }
+ 
+    /* ── STAT STRIP ── */
+    .stat-strip { display: grid; grid-template-columns: repeat(4, 1fr); border-bottom: 1px solid var(--border); }
+    .stat-cell { padding: 1.2rem 1.8rem; border-right: 1px solid var(--border); }
+    .stat-cell:last-child { border-right: none; }
+    .stat-num { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.9rem; color: #fff; line-height: 1; margin-bottom: 0.3rem; }
+    .stat-num.gold { color: var(--gold); }
+    .stat-num.pink { color: var(--pink); }
+    .stat-label { font-size: 0.58rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+ 
+    /* ── SECTION SHARED ── */
+    .section-tag { font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.8rem; display: flex; align-items: center; gap: 0.6rem; }
+    .section-tag::before { content: ''; display: inline-block; width: 12px; height: 1px; background: var(--gold); }
+    h2 { font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(1.7rem, 3.6vw, 2.5rem); line-height: 1.05; letter-spacing: -0.01em; color: var(--text); margin-bottom: 1rem; }
+ 
+    /* ── ABOUT / GEAR ── */
+    #about { display: grid; grid-template-columns: 18rem 1fr; border-bottom: 1px solid var(--border); }
+    .about-rail { padding: 3rem 1.8rem; border-right: 1px solid var(--border); }
+    .rail-block { margin-bottom: 2rem; }
+    .rail-block-label { font-size: 0.58rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.5rem; }
+    .rail-block-val { font-size: 0.78rem; color: var(--text); line-height: 1.6; }
+    .keyword-list { display: flex; flex-direction: column; gap: 0.3rem; }
+    .keyword { font-size: 0.62rem; letter-spacing: 0.08em; color: var(--violet); border: 1px solid rgba(201,166,255,0.2); padding: 0.2rem 0.6rem; display: inline-block; align-self: flex-start; }
+    .keyword.red { color: var(--pink); border-color: rgba(243,144,162,0.2); }
+    .about-body { padding: 3rem; }
+    .about-text { font-family: 'DM Serif Display', serif; font-size: 1.05rem; line-height: 1.75; color: var(--text); max-width: 58ch; font-style: italic; }
+    .about-text p + p { margin-top: 1.2rem; }
+ 
+    /* ── GALLERY ── */
+    .gallery-section { padding: 3.5rem 3rem; border-bottom: 1px solid var(--border); transition: background 0.6s ease, border-color 0.6s ease; }
+    .gallery-intro { font-size: 0.78rem; color: var(--muted); max-width: 60ch; margin-top: -0.4rem; margin-bottom: 2.5rem; }
+ 
+    .polaroid-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+      gap: 2.4rem 1.8rem;
+    }
+ 
+    /*  */
+    .photo-frame {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      overflow: hidden;
+      background: #0c0d1c;
+      cursor: pointer;
+    }
+    .photo-frame img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+      filter: saturate(1.05);
+    }
+    .photo-frame:focus-visible { outline: 2px solid var(--violet); outline-offset: 3px; }
+ 
+    .polaroid {
+      background: var(--paper);
+      padding: 0.7rem 0.7rem 1.1rem;
+      box-shadow: 0 10px 26px var(--paper-shadow);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      position: relative;
+    }
+    .polaroid:nth-child(3n+1)  { transform: rotate(-2.2deg); }
+    .polaroid:nth-child(3n+2)  { transform: rotate(1.6deg); }
+    .polaroid:nth-child(3n)    { transform: rotate(-0.8deg); }
+    .polaroid:hover {
+      transform: rotate(0deg) translateY(-4px) scale(1.03);
+      box-shadow: 0 16px 34px var(--paper-shadow);
+      z-index: 2;
+    }
+ 
+    .polaroid::before {
+      content: '';
+      position: absolute;
+      top: -0.6rem; left: 50%;
+      width: 3.4rem; height: 1.2rem;
+      transform: translateX(-50%) rotate(-3deg);
+      background: rgba(255,217,160,0.45);
+      border: 1px solid rgba(255,217,160,0.6);
+    }
+    .polaroid:nth-child(3n) ::before { transform: translateX(-50%) rotate(4deg); }
+ 
+    .polaroid-cap {
+      font-family: 'Caveat', cursive;
+      font-size: 1.15rem;
+      color: #2b2540;
+      text-align: center;
+      margin-top: 0.6rem;
+      line-height: 1.2;
+    }
+    .polaroid-meta {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.58rem;
+      letter-spacing: 0.04em;
+      color: #6b6480;
+      text-align: center;
+      margin-top: 0.2rem;
+    }
+ 
+    /* ── DAY SECTION ── */
+    #day-section {
+      padding: 4rem 3rem;
+    }
+ 
+    .snapshot-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(7.5rem, 1fr));
+      gap: 1.1rem;
+    }
+    .snapshot {
+      background: var(--paper);
+      padding: 0.35rem 0.35rem 0.6rem;
+      border-radius: 3px;
+      box-shadow: 0 6px 16px var(--paper-shadow);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .snapshot:hover { transform: translateY(-3px); box-shadow: 0 10px 22px var(--paper-shadow); }
+    .snapshot-cap {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.56rem;
+      letter-spacing: 0.03em;
+      text-align: center;
+      color: var(--muted);
+      margin-top: 0.4rem;
+      line-height: 1.3;
+    }
+ 
+    /* ── CLOSING ── */
+    #closing { padding: 4rem 3rem; display: flex; flex-direction: column; align-items: flex-start; gap: 1.8rem; }
+    .closing-text { font-family: 'DM Serif Display', serif; font-style: italic; font-size: 1.3rem; color: var(--text); max-width: 42ch; line-height: 1.6; }
+    .closing-text .accent { color: var(--violet); }
+ 
+    /* ── LIGHTBOX ── */
+    .lightbox {
+      position: fixed; inset: 0; z-index: 1000;
+      background: rgba(8,9,20,0.92);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 1rem; padding: 3rem;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.25s ease;
+    }
+    .lightbox.open { opacity: 1; pointer-events: auto; }
+    .lightbox img {
+      max-width: 90vw; max-height: 85vh;
+      object-fit: contain;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+    }
+    .lightbox-hint {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+ 
+    /* ── FOOTER ── */
+    footer { padding: 1.2rem 2.5rem; display: flex; justify-content: space-between; align-items: center; font-size: 0.58rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); border-top: 1px solid var(--border); }
+ 
+    /* ── MOBILE ── */
+    @media (max-width: 768px) {
+      nav { padding: 0.8rem 1.2rem; }
+      nav ul { gap: 1rem; }
+      .hero-top { grid-template-columns: 1fr; }
+      .hero-photo-panel { border-top: 1px solid var(--border); min-height: 18rem; }
+      .hero-title-area { border-right: none; padding: 3rem 1.5rem; }
+      .stat-strip { grid-template-columns: 1fr 1fr; }
+      .stat-cell:nth-child(2) { border-right: none; }
+      #about { grid-template-columns: 1fr; }
+      .about-rail { border-right: none; border-bottom: 1px solid var(--border); }
+      .gallery-section { padding: 2.5rem 1.5rem; }
+      #day-section { padding: 3rem 1.5rem; }
+      #closing { padding: 3rem 1.5rem; }
+      footer { flex-direction: column; gap: 0.4rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+ 
+  <div class="stars" aria-hidden="true">
+    <span class="star" style="top:8%; left:12%; animation-delay:0s;"></span>
+    <span class="star big" style="top:14%; left:78%; animation-delay:0.6s;"></span>
+    <span class="star" style="top:22%; left:34%; animation-delay:1.2s;"></span>
+    <span class="star" style="top:6%; left:54%; animation-delay:1.8s;"></span>
+    <span class="star" style="top:30%; left:88%; animation-delay:0.3s;"></span>
+    <span class="star big" style="top:40%; left:6%; animation-delay:2.1s;"></span>
+    <span class="star" style="top:48%; left:64%; animation-delay:1.5s;"></span>
+    <span class="star" style="top:58%; left:22%; animation-delay:0.9s;"></span>
+    <span class="star" style="top:66%; left:92%; animation-delay:2.4s;"></span>
+    <span class="star big" style="top:74%; left:40%; animation-delay:0.4s;"></span>
+    <span class="star" style="top:82%; left:16%; animation-delay:1.7s;"></span>
+    <span class="star" style="top:90%; left:70%; animation-delay:1.0s;"></span>
+    <span class="star" style="top:18%; left:96%; animation-delay:2.7s;"></span>
+    <span class="star" style="top:54%; left:48%; animation-delay:0.2s;"></span>
+    <span class="star big" style="top:36%; left:18%; animation-delay:1.3s;"></span>
+  </div>
+ 
+  <nav>
+    <a href="index.html" class="logo"><span class="moon" id="logo-emoji">🌙</span> Alana &lt;3</a>
+    <ul>
+      <li><a href="#moon-gallery">Moon</a></li>
+      <li><a href="#env-gallery">Night</a></li>
+      <li><a href="#day-section">Day</a></li>
+      <li><a href="index.html">Home →</a></li>
+    </ul>
+  </nav>
+ 
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-top">
+      <div class="hero-title-area">
+        <p class="report-label">Astrophotography & Photography · 2022 – Present</p>
+        <h1>Feel<br/>the<br/>Night</h1>
+        <p class="hero-byline">
+          My collection of moon shots, taken all over the country, through many hours of my life spent on Earth.<br/>
+          A piece of me, for you.<br/>
+          <br/>
+           <strong>Shot, stacked, and edited by Alana Baker with help from <a class="byline-link" href="https://www.darktable.org/install/" target="_blank" rel="noopener noreferrer">darktable</a> and <a class="byline-link" href="https://www.gimp.org/downloads/" target="_blank" rel="noopener noreferrer">GIMP</a>.</strong>
+        </p>
+        <div class="cta-row">
+          <a href="#moon-gallery" class="btn btn-solid">View the Gallery</a>
+          <a href="index.html#projects" class="btn btn-ghost">All Projects →</a>
+        </div>
+      </div>
+      <div class="hero-photo-panel">
+        <div class="polaroid" style="width: 14rem; transform: rotate(-3deg);">
+          <div class="photo-frame" tabindex="0" role="button" aria-label="View full size: favorite shot so far" onclick="openLightbox(this)" onkeydown="if(event.key==='Enter'){openLightbox(this)}">
+            <img src="moon-hero.jpg" alt="featured moon photograph, hand-held telephoto shot" />
+          </div>
+          <p class="polaroid-cap">favorite shot so far</p>
+          <p class="polaroid-meta">📷 handheld · telephoto</p>
+        </div>
+      </div>
+    </div>
+    <div class="stat-strip">
+      <div class="stat-cell"><div class="stat-num gold">1221</div><div class="stat-label">Photos Taken</div></div>
+      <div class="stat-cell"><div class="stat-num">448</div><div class="stat-label">Moon Shots</div></div>
+      <div class="stat-cell"><div class="stat-num pink">0</div><div class="stat-label">Telescopes purchased</div></div>
+      <div class="stat-cell"><div class="stat-num gold">60+</div><div class="stat-label">Hours spent waiting in my car</div></div>
+    </div>
+  </section>
+ 
+  <!-- ABOUT / GEAR -->
+  <section id="about">
+    <div class="about-rail">
+      <div class="rail-block"><p class="rail-block-label">Camera</p><p class="rail-block-val">Canon EOS T100 +<br/>Canon EF-S 55–250mm f/4–5.6 IS</p></div>
+      <div class="rail-block"><p class="rail-block-label">Support</p><p class="rail-block-val">Standard tripod mount, and occasionally a good rock</p></div>
+      <div class="rail-block"><p class="rail-block-label">Editing</p><p class="rail-block-val">darktable + GIMP for exposure, contrast, crop, and stacking</p></div>
+      <div class="rail-block"><p class="rail-block-label">Keywords</p>
+        <div class="keyword-list">
+          <span class="keyword">Moon Photography</span>
+          <span class="keyword">Long Exposure</span>
+          <span class="keyword">Night Sky</span>
+          <span class="keyword">Landscape</span>
+          <span class="keyword red">No Telescope Needed</span>
+        </div>
+      </div>
+    </div>
+    <div class="about-body">
+      <div class="section-tag">About this collection</div>
+      <h2>Passion, Mostly</h2>
+      <div class="about-text">
+        <p>As many college students before me (and many after too), I am broke. This means I make do with what I have. I thrifted and repaired an old EOS T100, and scored a lens off a local marketplace.</p>
+        <p>And I turned it into this. What I have assembled below is a loose congolmeration of my efforts in both coding and photography, so bear with me there.</p>
+        <p>All the things you find below can be done at home with your hands, some time, and a lot of love for the night.</p>
+      </div>
+    </div>
+  </section>
+ 
+  <!-- MOON GALLERY -->
+  <section class="gallery-section" id="moon-gallery">
+    <div class="section-tag">The Gallery</div>
+    <h2>Luna<br>over the years</h2>
+    <p class="gallery-intro">The moon may not have changed too much, but I definitely have.</p>
+    <div class="polaroid-grid">
+      <div class="polaroid">
+        <div class="photo-frame" tabindex="0" role="button" aria-label="View full size: first attempt, 2022" onclick="openLightbox(this)" onkeydown="if(event.key==='Enter'){openLightbox(this)}">
+          <img src="moon1.jpg" alt="inp" />
+        </div>
+        <p class="polaroid-cap">2022 · first attempt</p>
+        <p class="polaroid-meta">📷 handheld · zoomed all the way in</p>
+      </div>
+      <div class="polaroid">
+        <div class="photo-frame" tabindex="0" role="button" aria-label="View full size: finally found manual focus, 2023" onclick="openLightbox(this)" onkeydown="if(event.key==='Enter'){openLightbox(this)}">
+          <img src="moon2.jpg" alt="inp" />
+        </div>
+        <p class="polaroid-cap">2022 · fixed the settings</p>
+        <p class="polaroid-meta">📷 handheld</p>
+      </div>
+      <div class="polaroid">
+        <div class="photo-frame" tabindex="0" role="button" aria-label="View full size: new lens new world, 2023" onclick="openLightbox(this)" onkeydown="if(event.key==='Enter'){openLightbox(this)}">
+          <img src="moon3.jpg" alt="inp" />
+        </div>
+        <p class="polaroid-cap">2023 · road trip !</p>
+        <p class="polaroid-meta">📷 handheld / ground</p>
+      </div>
+      <div class="polaroid">
+        <div class="photo-frame" tabindex="0" role="button" aria-label="View full size: tripod changed everything, 2024" onclick="openLightbox(this)" onkeydown="if(event.key==='Enter'){openLightbox(this)}">
+          <img src="moon4.jpg" alt="inp" />
+        </div>
+        <p class="polaroid-cap">2024 · a little tripod help</p>
+        <p class="polaroid-meta">📷 tripod</p>
+      </div>
+      <div class="polaroid">
+        <div class="photo-frame" tabindex="0" role="button" aria-label="View full size: learned to stack exposures, 2025" onclick="openLightbox(this)" onkeydown="if(event.key==='Enter'){openLightbox(this)}">
+          <img src="moon5.jpg" alt="inp" />
+        </div>
+        <p class="polaroid-cap">2025 · learned to stack exposures</p>
+        <p class="polaroid-meta">📷 tripod · stacked in darktable</p>
+      </div>
+      <div class="polaroid">
+        <div class="photo-frame" tabindex="0" role="button" aria-label="View full size: favorite shot yet, 2026" onclick="openLightbox(this)" onkeydown="if(event.key==='Enter'){openLightbox(this)}">
+          <img src="moon6.jpg" alt="inp" />
+        </div>
+        <p class="polaroid-cap">2026 · most unique</p>
+        <p class="polaroid-meta">📷 tripod · cropped tight</p>
+      </div>
+    </div>
+  </section>
+ 
+  <!-- ENVIRONMENT GALLERY (NIGHT) -->
+  <section class="gallery-section" id="env-gallery">
+    <div class="section-tag">Gallery 02</div>
+    <h2>Night on Earth</h2>
+    <p class="gallery-intro">Sometimes you have a minute to spare, don't miss the chance to look around.</p>
+    <div class="polaroid-grid">
+      <div class="polaroid">
+        <div class="photo-frame" tabindex="0" role="button" aria-label="View full size: backyard, 11pm" onclick="openLightbox(this)" onkeydown="if(event.key==='Enter'){openLightbox(this)}">
+          <img src="env1.jpg" alt="inp" />
+        </div>
+        <p class="polaroid-cap">Northern Lights at home</p>
+        <p class="polaroid-meta">📷 tripod</p>
+      </div>
+      <div class="polaroid">
+        <div class="photo-frame" tabindex="0" role="button" aria-label="View full size: fog rolled in" onclick="openLightbox(this)" onkeydown="if(event.key==='Enter'){openLightbox(this)}">
+          <img src="env2.jpg" alt="inp" />
+        </div>
+        <p class="polaroid-cap">fog rolled in</p>
+        <p class="polaroid-meta">📷 handheld</p>
+      </div>
+      <div class="polaroid">
+        <div class="photo-frame" tabindex="0" role="button" aria-label="View full size: accidental star trail" onclick="openLightbox(this)" onkeydown="if(event.key==='Enter'){openLightbox(this)}">
+          <img src="env3.jpg" alt="inp" />
+        </div>
+        <p class="polaroid-cap">the stars alone</p>
+        <p class="polaroid-meta">📷 tripod · long exposure</p>
+      </div>
+      <div class="polaroid">
+        <div class="photo-frame" tabindex="0" role="button" aria-label="View full size: one good tree" onclick="openLightbox(this)" onkeydown="if(event.key==='Enter'){openLightbox(this)}">
+          <img src="env4.jpg" alt="inp" />
+        </div>
+        <p class="polaroid-cap">chasing the night</p>
+        <p class="polaroid-meta">📷 handheld</p>
+      </div>
+    </div>
+  </section>
+ 
+  <!-- AND THE DAY -->
+  <section id="day-section">
+    <div class="section-tag">Gallery 03</div>
+    <h2>And the Day ☀️</h2>
+    <p class="gallery-intro">But the sun comes up eventually. </p>
+    <div class="snapshot-grid">
+      <div class="snapshot">
+        <div class="photo-frame" tabindex="0" role="button" aria-label="View full size: Rome, the Colosseum" onclick="openLightbox(this)" onkeydown="if(event.key==='Enter'){openLightbox(this)}">
+          <img src="day1.jpg" alt="inp" />
+        </div>
+        <p class="snapshot-cap">Rome 🇮🇹</p>
+      </div>
+      <div class="snapshot">
+        <div class="photo-frame" tabindex="0" role="button" aria-label="View full size: Venice canal" onclick="openLightbox(this)" onkeydown="if(event.key==='Enter'){openLightbox(this)}">
+          <img src="day2.jpg" alt="inp" />
+        </div>
+        <p class="snapshot-cap">Venice 🇮🇹</p>
+      </div>
+      <div class="snapshot">
+        <div class="photo-frame" tabindex="0" role="button" aria-label="View full size: Florence skyline" onclick="openLightbox(this)" onkeydown="if(event.key==='Enter'){openLightbox(this)}">
+          <img src="day3.jpg" alt="inp" />
+        </div>
+        <p class="snapshot-cap">Florence 🇮🇹</p>
+      </div>
+      <div class="snapshot">
+        <div class="photo-frame" tabindex="0" role="button" aria-label="View full size: Cinque Terre cliffs" onclick="openLightbox(this)" onkeydown="if(event.key==='Enter'){openLightbox(this)}">
+          <img src="day4.jpg" alt="inp" />
+        </div>
+        <p class="snapshot-cap">Cinque Terre 🇮🇹</p>
+      </div>
+      <div class="snapshot">
+        <div class="photo-frame" tabindex="0" role="button" aria-label="View full size: Leaning Tower of Pisa" onclick="openLightbox(this)" onkeydown="if(event.key==='Enter'){openLightbox(this)}">
+          <img src="day5.jpg" alt="inp" />
+        </div>
+        <p class="snapshot-cap">Pisa 🇮🇹</p>
+      </div>
+      <div class="snapshot">
+        <div class="photo-frame" tabindex="0" role="button" aria-label="View full size: Milan Duomo" onclick="openLightbox(this)" onkeydown="if(event.key==='Enter'){openLightbox(this)}">
+          <img src="day6.jpg" alt="inp" />
+        </div>
+        <p class="snapshot-cap">Milan 🇮🇹</p>
+      </div>
+      <div class="snapshot">
+        <div class="photo-frame" tabindex="0" role="button" aria-label="View full size: Lake Como morning fog" onclick="openLightbox(this)" onkeydown="if(event.key==='Enter'){openLightbox(this)}">
+          <img src="day7.jpg" alt="inp" />
+        </div>
+        <p class="snapshot-cap">Lake Como 🇮🇹</p>
+      </div>
+      <div class="snapshot">
+        <div class="photo-frame" tabindex="0" role="button" aria-label="View full size: Amalfi Coast road" onclick="openLightbox(this)" onkeydown="if(event.key==='Enter'){openLightbox(this)}">
+          <img src="day8.jpg" alt="inp" />
+        </div>
+        <p class="snapshot-cap">Amalfi Coast 🇮🇹</p>
+      </div>
+      <div class="snapshot">
+        <div class="photo-frame" tabindex="0" role="button" aria-label="View full size: St. Peter's Square, Vatican City" onclick="openLightbox(this)" onkeydown="if(event.key==='Enter'){openLightbox(this)}">
+          <img src="day9.jpg" alt="inp" />
+        </div>
+        <p class="snapshot-cap">Vatican City 🇮🇹</p>
+      </div>
+      <div class="snapshot">
+        <div class="photo-frame" tabindex="0" role="button" aria-label="View full size: Naples bay view" onclick="openLightbox(this)" onkeydown="if(event.key==='Enter'){openLightbox(this)}">
+          <img src="day10.jpg" alt="inp" />
+        </div>
+        <p class="snapshot-cap">Naples 🇮🇹</p>
+      </div>
+      <div class="snapshot">
+        <div class="photo-frame" tabindex="0" role="button" aria-label="View full size: Eiffel Tower, Paris" onclick="openLightbox(this)" onkeydown="if(event.key==='Enter'){openLightbox(this)}">
+          <img src="day11.jpg" alt="inp" />
+        </div>
+        <p class="snapshot-cap">Paris 🇫🇷</p>
+      </div>
+      <div class="snapshot">
+        <div class="photo-frame" tabindex="0" role="button" aria-label="View full size: Promenade des Anglais, Nice" onclick="openLightbox(this)" onkeydown="if(event.key==='Enter'){openLightbox(this)}">
+          <img src="day12.jpg" alt="inp" />
+        </div>
+        <p class="snapshot-cap">Nice 🇫🇷</p>
+      </div>
+      <div class="snapshot">
+        <div class="photo-frame" tabindex="0" role="button" aria-label="View full size: Lyon rooftops" onclick="openLightbox(this)" onkeydown="if(event.key==='Enter'){openLightbox(this)}">
+          <img src="day13.jpg" alt="inp" />
+        </div>
+        <p class="snapshot-cap">Lyon 🇫🇷</p>
+      </div>
+      <div class="snapshot">
+        <div class="photo-frame" tabindex="0" role="button" aria-label="View full size: Provence lavender fields" onclick="openLightbox(this)" onkeydown="if(event.key==='Enter'){openLightbox(this)}">
+          <img src="day14.jpg" alt="inp" />
+        </div>
+        <p class="snapshot-cap">Provence 🇫🇷</p>
+      </div>
+      <div class="snapshot">
+        <div class="photo-frame" tabindex="0" role="button" aria-label="View full size: Mont Saint-Michel" onclick="openLightbox(this)" onkeydown="if(event.key==='Enter'){openLightbox(this)}">
+          <img src="day15.jpg" alt="inp" />
+        </div>
+        <p class="snapshot-cap">Mont Saint-Michel 🇫🇷</p>
+      </div>
+      <div class="snapshot">
+        <div class="photo-frame" tabindex="0" role="button" aria-label="View full size: Loire Valley chateau" onclick="openLightbox(this)" onkeydown="if(event.key==='Enter'){openLightbox(this)}">
+          <img src="day16.jpg" alt="inp" />
+        </div>
+        <p class="snapshot-cap">Loire Valley 🇫🇷</p>
+      </div>
+      <div class="snapshot">
+        <div class="photo-frame" tabindex="0" role="button" aria-label="View full size: Marseille Vieux-Port" onclick="openLightbox(this)" onkeydown="if(event.key==='Enter'){openLightbox(this)}">
+          <img src="day17.jpg" alt="inp" />
+        </div>
+        <p class="snapshot-cap">Marseille 🇫🇷</p>
+      </div>
+      <div class="snapshot">
+        <div class="photo-frame" tabindex="0" role="button" aria-label="View full size: Strasbourg canal houses" onclick="openLightbox(this)" onkeydown="if(event.key==='Enter'){openLightbox(this)}">
+          <img src="day18.jpg" alt="inp" />
+        </div>
+        <p class="snapshot-cap">Strasbourg 🇫🇷</p>
+      </div>
+      <div class="snapshot">
+        <div class="photo-frame" tabindex="0" role="button" aria-label="View full size: Bordeaux vineyard" onclick="openLightbox(this)" onkeydown="if(event.key==='Enter'){openLightbox(this)}">
+          <img src="day19.jpg" alt="inp" />
+        </div>
+        <p class="snapshot-cap">Bordeaux 🇫🇷</p>
+      </div>
+      <div class="snapshot">
+        <div class="photo-frame" tabindex="0" role="button" aria-label="View full size: Chamonix alpine view" onclick="openLightbox(this)" onkeydown="if(event.key==='Enter'){openLightbox(this)}">
+          <img src="day20.jpg" alt="inp" />
+        </div>
+        <p class="snapshot-cap">Chamonix 🇫🇷</p>
+      </div>
+    </div>
+  </section>
+ 
+  <!-- CLOSING -->
+  <section id="closing">
+    <div class="section-tag">An end, for now</div>
+    <p class="closing-text">Who needs the best tools, when all you really need is a calm hand, time, and <span class="accent">the joy of creation.</span> <br> More to come when the clouds allow it.</p>
+    <a href="index.html#projects" class="btn btn-ghost">← Back to All Projects</a>
+  </section>
+ 
+  <footer>
+    <span>© 2026 Alana Baker</span>
+    <span>Night Sky Log · Astrophotography & Photography</span>
+    <span>Nuclear Engineering · UC Berkeley</span>
+  </footer>
+ 
+  <!-- LIGHTBOX -->
+  <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+    <img id="lightbox-img" src="" alt="" />
+    <p class="lightbox-hint">tap anywhere or press Esc to close</p>
+  </div>
+ 
+  <script>
+    function openLightbox(frame) {
+      var img = frame.querySelector('img');
+      var lb = document.getElementById('lightbox');
+      var lbImg = document.getElementById('lightbox-img');
+      lbImg.src = img.getAttribute('src');
+      lbImg.alt = img.getAttribute('alt');
+      lb.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closeLightbox();
+    });
+ 
+    // Night/Day theme crossfade
+    (function () {
+      var root = document.documentElement;
+      var starsEl = document.querySelector('.stars');
+      var logoEmoji = document.getElementById('logo-emoji');
+      var envSection = document.getElementById('env-gallery');
+      var daySection = document.getElementById('day-section');
+      if (!envSection || !daySection) return;
+
+      var NIGHT = {
+        bg: '#15172b', border: '#4a4d78', violet: '#c9a6ff', violet2: '#ddc6ff',
+        gold: '#ffd9a0', pink: '#f390a2', text: '#eae6f5', muted: '#8d8fb8',
+        paper: '#f3ede0', paperShadow: 'rgba(0,0,0,0.45)',
+        navBg: 'rgba(21,23,43,0.92)', accent: '#c9a6ff'
+      };
+      var DAY = {
+        bg: '#eaf6ff', border: 'rgba(43,42,61,0.14)', violet: '#5b8dee', violet2: '#a9cdf7',
+        gold: '#e08a2e', pink: '#e0608a', text: '#2b2a3d', muted: '#6b6480',
+        paper: '#ffffff', paperShadow: 'rgba(60,50,20,0.16)',
+        navBg: 'rgba(253,246,232,0.92)', accent: '#e08a2e'
+      };
+
+      function parseColor(str) {
+        str = str.trim();
+        if (str[0] === '#') {
+          var hex = str.slice(1);
+          if (hex.length === 3) hex = hex.split('').map(function (c) { return c + c; }).join('');
+          var num = parseInt(hex, 16);
+          return [(num >> 16) & 255, (num >> 8) & 255, num & 255, 1];
+        }
+        var m = str.match(/rgba?\(([^)]+)\)/);
+        if (m) {
+          var parts = m[1].split(',').map(function (s) { return parseFloat(s); });
+          return [parts[0], parts[1], parts[2], parts.length > 3 ? parts[3] : 1];
+        }
+        return [0, 0, 0, 1];
+      }
+
+      function lerp(a, b, t) { return a + (b - a) * t; }
+
+      function mix(c1, c2, t) {
+        var p1 = parseColor(c1), p2 = parseColor(c2);
+        var r = Math.round(lerp(p1[0], p2[0], t));
+        var g = Math.round(lerp(p1[1], p2[1], t));
+        var b = Math.round(lerp(p1[2], p2[2], t));
+        var a = Math.round(lerp(p1[3], p2[3], t) * 1000) / 1000;
+        return 'rgba(' + r + ', ' + g + ', ' + b + ', ' + a + ')';
+      }
+
+      function toVarName(key) {
+        return '--' + key.replace(/[A-Z]/g, function (m) { return '-' + m.toLowerCase(); });
+      }
+
+
+        var TRANSITION_SPAN = 500;
+        var zoneStart = 0, zoneEnd = 1;
+        function recalcZone() {
+          var envTop = envSection.getBoundingClientRect().top + window.scrollY;
+          var envSectionHeight = envSection.offsetHeight  + 400;      
+          var envSectionBottom = envTop + envSectionHeight;    
+
+        // transition begins exactly when the BOTTOM of the viewport scrolls
+        // down to meet the bottom edge of the night (Environment) section
+          zoneStart = envSectionBottom - window.innerHeight;
+          zoneEnd = zoneStart + TRANSITION_SPAN;
+        }
+
+      var currentEmoji = 'night';
+      function applyTheme(p) {
+        Object.keys(NIGHT).forEach(function (key) {
+          root.style.setProperty(toVarName(key), mix(NIGHT[key], DAY[key], p));
+        });
+        if (starsEl) starsEl.style.opacity = String(1 - p);
+        if (logoEmoji) {
+          if (p > 0.5 && currentEmoji !== 'day') {
+            logoEmoji.textContent = '☀️';
+            currentEmoji = 'day';
+          } else if (p <= 0.5 && currentEmoji !== 'night') {
+            logoEmoji.textContent = '🌙';
+            currentEmoji = 'night';
+          }
+        }
+      }
+
+      var ticking = false;
+      function onScroll() {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(function () {
+          var scrollPos = window.scrollY + window.innerHeight * 0.5;
+          var p = (scrollPos - zoneStart) / (zoneEnd - zoneStart);
+          p = Math.max(0, Math.min(1, p));
+          applyTheme(p);
+          ticking = false;
+        });
+      }
+
+      window.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('resize', function () { recalcZone(); onScroll(); });
+      recalcZone();
+      onScroll();
+    })();
+  </script>
+ 
+</body>
+</html>
