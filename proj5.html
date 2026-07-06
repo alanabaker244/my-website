@@ -290,11 +290,52 @@
       transition: opacity 0.25s ease;
     }
     .lightbox.open { opacity: 1; pointer-events: auto; }
-    .lightbox img {
-      max-width: 90vw; max-height: 85vh;
+    .lightbox-img-wrap {
+      overflow: hidden;
+      max-width: 90vw;
+      max-height: 75vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: grab;
+    }
+    .lightbox-img-wrap.dragging { cursor: grabbing; }
+    .lightbox-img-wrap img {
+      max-width: 90vw;
+      max-height: 75vh;
       object-fit: contain;
       box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+      transition: transform 0.1s ease-out;
+      will-change: transform;
+      user-select: none;
+      -webkit-user-drag: none;
     }
+    .lightbox-img-wrap.dragging img { transition: none; }
+
+    .lightbox-zoom-controls {
+      display: flex; align-items: center; gap: 0.6rem;
+      background: rgba(20,20,35,0.7);
+      border: 1px solid var(--border);
+      padding: 0.4rem 0.8rem;
+      border-radius: 999px;
+    }
+    .zoom-btn {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.9rem;
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+      width: 1.8rem; height: 1.8rem;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s, color 0.2s;
+    }
+    .zoom-btn:hover { background: var(--violet); color: var(--bg); border-color: var(--violet); }
+    .zoom-reset { width: auto; border-radius: 999px; padding: 0 0.8rem; font-size: 0.6rem; letter-spacing: 0.08em; text-transform: uppercase; }
+    .zoom-level {
+      font-size: 0.65rem; letter-spacing: 0.05em; color: var(--muted); min-width: 3.2rem; text-align: center;
+    }        
     .lightbox-hint {
       font-family: 'Space Mono', monospace;
       font-size: 0.65rem;
@@ -648,11 +689,24 @@
  
   <!-- LIGHTBOX -->
   <div class="lightbox" id="lightbox" onclick="closeLightbox()">
-    <img id="lightbox-img" src="" alt="" />
-    <p class="lightbox-hint">tap anywhere or press Esc to close</p>
+    <div class="lightbox-img-wrap" id="lightbox-img-wrap">
+      <img id="lightbox-img" src="" alt="" />
+    </div>
+    <div class="lightbox-zoom-controls">
+      <button type="button" class="zoom-btn" onclick="zoomOut()" aria-label="Zoom out">−</button>
+      <span class="zoom-level" id="zoom-level">100%</span>
+      <button type="button" class="zoom-btn" onclick="zoomIn()" aria-label="Zoom in">+</button>
+      <button type="button" class="zoom-btn zoom-reset" onclick="resetZoom()" aria-label="Reset zoom">Reset</button>
+    </div>
+    <p class="lightbox-hint">scroll or pinch to zoom - drag to pan - tap background or Esc to close</p>
   </div>
  
   <script>
+    var currentScale = 1, currentX = 0, currentY = 0;
+    var isDragging = false, dragStartX = 0, dragStartY = 0, startPanX = 0, startPanY = 0;
+    var pinchStartDist = 0, pinchStartScale = 1;
+    var MIN_SCALE = 1, MAX_SCALE = 5;
+
     function openLightbox(frame) {
       var img = frame.querySelector('img');
       var lb = document.getElementById('lightbox');
@@ -661,14 +715,92 @@
       lbImg.alt = img.getAttribute('alt');
       lb.classList.add('open');
       document.body.style.overflow = 'hidden';
+      resetZoom();
     }
     function closeLightbox() {
       document.getElementById('lightbox').classList.remove('open');
       document.body.style.overflow = '';
+      resetZoom();
     }
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape') closeLightbox();
     });
+
+    function updateTransform() {
+      document.getElementById('lightbox-img').style.transform =
+        'translate(' + currentX + 'px, ' + currentY + 'px) scale(' + currentScale + ')';
+    }
+    function updateZoomLabel() {
+      document.getElementById('zoom-level').textContent = Math.round(currentScale * 100) + '%';
+    }
+    function setScale(newScale) {
+      newScale = Math.min(MAX_SCALE, Math.max(MIN_SCALE, newScale));
+      if (newScale === MIN_SCALE) { currentX = 0; currentY = 0; }
+      currentScale = newScale;
+      updateTransform();
+      updateZoomLabel();
+    }
+    function zoomIn() { setScale(currentScale + 0.5); }
+    function zoomOut() { setScale(currentScale - 0.5); }
+    function resetZoom() { setScale(1); }
+
+    var wrapEl = document.getElementById('lightbox-img-wrap');
+    wrapEl.addEventListener('click', function (e) { e.stopPropagation(); });
+
+    wrapEl.addEventListener('wheel', function (e) {
+      e.preventDefault();
+      setScale(currentScale + (e.deltaY < 0 ? 0.25 : -0.25));
+    }, { passive: false });
+
+    wrapEl.addEventListener('dblclick', function () {
+      currentScale > 1 ? resetZoom() : setScale(2.5);
+    });
+
+    wrapEl.addEventListener('mousedown', function (e) {
+      if (currentScale <= 1) return;
+      isDragging = true;
+      wrapEl.classList.add('dragging');
+      dragStartX = e.clientX; dragStartY = e.clientY;
+      startPanX = currentX; startPanY = currentY;
+    });
+    window.addEventListener('mousemove', function (e) {
+      if (!isDragging) return;
+      currentX = startPanX + (e.clientX - dragStartX);
+      currentY = startPanY + (e.clientY - dragStartY);
+      updateTransform();
+    });
+    window.addEventListener('mouseup', function () {
+      isDragging = false;
+      wrapEl.classList.remove('dragging');
+    });
+
+    function getTouchDist(touches) {
+      var dx = touches[0].clientX - touches[1].clientX;
+      var dy = touches[0].clientY - touches[1].clientY;
+      return Math.sqrt(dx * dx + dy * dy);
+    }
+    wrapEl.addEventListener('touchstart', function (e) {
+      if (e.touches.length === 2) {
+        pinchStartDist = getTouchDist(e.touches);
+        pinchStartScale = currentScale;
+      } else if (e.touches.length === 1 && currentScale > 1) {
+        isDragging = true;
+        dragStartX = e.touches[0].clientX; dragStartY = e.touches[0].clientY;
+        startPanX = currentX; startPanY = currentY;
+      }
+    });
+    wrapEl.addEventListener('touchmove', function (e) {
+      if (e.touches.length === 2) {
+        e.preventDefault();
+        setScale(pinchStartScale * (getTouchDist(e.touches) / pinchStartDist));
+      } else if (e.touches.length === 1 && isDragging) {
+        e.preventDefault();
+        currentX = startPanX + (e.touches[0].clientX - dragStartX);
+        currentY = startPanY + (e.touches[0].clientY - dragStartY);
+        updateTransform();
+      }
+    }, { passive: false });
+    wrapEl.addEventListener('touchend', function () { isDragging = false; });
  
     // Night/Day theme crossfade
     (function () {
