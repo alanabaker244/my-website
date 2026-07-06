@@ -373,6 +373,17 @@
         color: inherit;
         cursor: pointer;
     }
+        .unfinished-project-card {
+        padding: 2rem;
+        border-right: 2px solid var(--stone);
+        border-bottom: 2px solid var(--stone);
+        position: relative;
+        overflow: hidden;
+        display: block;
+        text-decoration: none;
+        color: inherit;
+        cursor: pointer;
+      }
 
 .project-card:hover { background: var(--fog); }
  
@@ -422,6 +433,17 @@
       text-decoration: none;
       border-bottom: 1px solid currentColor;
     }
+
+    .unfinished-project-link {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--stone);
+      text-decoration: none;
+      border-bottom: 0px solid currentColor;
+    }
+    
  
     /* ── EXPERIENCE ── */
     #experience {
@@ -748,25 +770,25 @@
         <span class="project-link">View the report →</span>
       </a>
  
-      <a href="#" class="project-card" data-num="02">
+      <a href="#" class="unfinished-project-card" data-num="02">
         <span class="project-tag">Electronics and CAD</span>
         <h3 class="project-title">Combat Robot Creation</h3>
         <p class="project-desc">Designed and wired a tournament capable combat robot from the group up with my suitemate. Operational stripping, series battery configuration, brushless motor to ESC communication - with three-phase wiring and positive-rail switching.</p>
-        <span class="project-link">View the process →</span>
+        <span class="unfinished-project-link">View the process →</span>
       </a>
  
-      <a href="#" class="project-card" data-num="03">
+      <a href="#" class="unfinished-project-card" data-num="03">
         <span class="project-tag">Nuclear Simulation</span>
         <h3 class="project-title">Monte Carlo</h3>
         <p class="project-desc">[MCNP & OpenMC merger for fast neutron simulation in tokamak internals]</p>
-        <span class="project-link">Run the simulation [coming soon ; ETA end-of-year] →</span>
+        <span class="unfinished-project-link">Run the simulation [coming soon ; ETA end-of-year] →</span>
       </a>
  
-      <a href="#" class="project-card" data-num="04">
+      <a href="#" class="unfinished-project-card" data-num="04">
         <span class="project-tag">Video Editing</span>
         <h3 class="project-title">DaVinci Visual Node Creation</h3>
         <p class="project-desc">Designing and ordering custom-made visual nodes in a professional software workspace to build complex compositing and motion graphics pipelines.</p>
-        <span class="project-link">Learn more →</span>
+        <span class="unfinished-project-link">Learn more →</span>
       </a>
  
       <a href="proj5.html" class="project-card" data-num="05">
