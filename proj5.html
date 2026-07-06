@@ -711,12 +711,22 @@
       var img = frame.querySelector('img');
       var lb = document.getElementById('lightbox');
       var lbImg = document.getElementById('lightbox-img');
+      var fullSrc = img.getAttribute('data-full') || img.getAttribute('src');
       lbImg.src = img.getAttribute('src');
       lbImg.alt = img.getAttribute('alt');
       lb.classList.add('open');
       document.body.style.overflow = 'hidden';
       resetZoom();
+
+      if (fullSrc && fullSrc !== img.getAttribute('src')) {
+        var fullImg = new Image();
+        fullImg.onload = function () {
+          lbImg.src = fullSrc;
+        };
+        fullImg.src = fullSrc;
+      }
     }
+    
     function closeLightbox() {
       document.getElementById('lightbox').classList.remove('open');
       document.body.style.overflow = '';
