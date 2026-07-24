@@ -849,7 +849,7 @@
  
       <div class="resume-cta">
         <p>Full resume available on request or download</p>
-        <a href="docsandpics/resume.pdf" class="btn-resume" download>Download Resume</a>
+        <a href="#" class="btn-resume resume-download-link">Download Resume</a>
       </div>
     </div>
   </section>
@@ -875,7 +875,7 @@
           <span class="contact-link-label">GitHub</span>
           <span class="contact-link-value">github.com/alanabaker244</span>
         </a>
-        <a href="docsandpics/resume.pdf" class="contact-link-row" download>
+        <a href="#" class="contact-link-row resume-download-link">
           <span class="contact-link-label">Resume</span>
           <span class="contact-link-value">Download PDF</span>
         </a>
@@ -916,5 +916,37 @@
     runCaptcha();
   </script>
  
+<script>
+    document.querySelectorAll('.resume-download-link').forEach(function (link) {
+      link.addEventListener('click', function (e) {
+        e.preventDefault();
+        grecaptcha.ready(function () {
+          grecaptcha.execute('6LfHp8osAAAAAFT5rFmLp9YYf8k5pBlXpqlch6qG', { action: 'resume_download' })
+            .then(function (token) {
+              return fetch('https://btgate.alana-baker244.workers.dev', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ token: token }),
+              });
+            })
+            .then(function (res) {
+              if (!res.ok) throw new Error('verification failed');
+              return res.blob();
+            })
+            .then(function (blob) {
+              var url = URL.createObjectURL(blob);
+              var a = document.createElement('a');
+              a.href = url;
+              a.download = 'Alana_Baker_Resume.pdf';
+              a.click();
+              URL.revokeObjectURL(url);
+            })
+            .catch(function () {
+              alert('Could not verify — please try again or email me directly.');
+            });
+        });
+      });
+    });
+  </script>
 </body>
 </html>
