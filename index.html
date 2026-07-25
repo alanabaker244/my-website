@@ -364,29 +364,19 @@
         border-top: 2px solid var(--stone);
     }
 
-        .project-card {
+    .project-card {
         padding: 2rem;
         border-right: 2px solid var(--stone);
         border-bottom: 2px solid var(--stone);
         position: relative;
         overflow: hidden;
         transition: background 0.25s;
-        display: block;
+        display: flex;
+        flex-direction: column;
         text-decoration: none;
         color: inherit;
         cursor: pointer;
     }
-        .unfinished-project-card {
-        padding: 2rem;
-        border-right: 2px solid var(--stone);
-        border-bottom: 2px solid var(--stone);
-        position: relative;
-        overflow: hidden;
-        display: block;
-        text-decoration: none;
-        color: inherit;
-        cursor: pointer;
-      }
 
 .project-card:hover { background: var(--fog); }
  
@@ -410,6 +400,7 @@
       color: var(--cream);
       padding: 0.25rem 0.6rem;
       margin-bottom: 1rem;
+      align-self: flex-start;
     }
  
     .project-title {
@@ -435,6 +426,9 @@
       color: var(--rust);
       text-decoration: none;
       border-bottom: 1px solid currentColor;
+      margin-top: auto;
+      padding-top: 1.5rem;
+      align-self: flex-start;
     }
 
     .unfinished-project-link {
@@ -445,6 +439,70 @@
       color: var(--stone);
       text-decoration: none;
       border-bottom: 0px solid currentColor;
+      margin-top: auto;
+      padding-top: 1.5rem;
+      align-self: flex-start;
+    }
+
+
+  /* ── UPCOMING PROJECTS ── */
+      #upcoming {
+        padding: 5rem 3rem;
+        border-bottom: 2px solid var(--stone);
+        background: var(--fog);
+      }
+
+      .upcoming-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 0;
+        border-left: 2px dashed var(--stone);
+        border-top: 2px dashed var(--stone);
+      }
+
+      .upcoming-card {
+        padding: 2rem;
+        border-right: 2px dashed var(--stone);
+        border-bottom: 2px dashed var(--stone);
+        background: var(--cream);
+        display: flex;
+        flex-direction: column;
+      }
+
+      .upcoming-tag {
+        display: inline-block;
+        font-family: 'IBM Plex Mono', monospace;
+        font-size: 0.65rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        background: var(--bark);
+        color: var(--cream);
+        padding: 0.25rem 0.6rem;
+        margin-bottom: 1rem;
+        align-self: flex-start;
+      }
+
+      .upcoming-title {
+        font-family: 'DM Serif Display', serif;
+        font-size: 1.4rem;
+        color: var(--stone);
+        margin-bottom: 0.7rem;
+      }
+
+      .upcoming-desc {
+        font-size: 0.9rem;
+        color: var(--moss);
+        line-height: 1.6;
+      }
+
+    .upcoming-eta {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--rust);
+      margin-top: auto;
+      padding-top: 1.5rem;
     }
     
  
@@ -773,25 +831,25 @@
         <span class="project-link">View the report →</span>
       </a>
  
-      <a href="#" class="unfinished-project-card" data-num="02">
+      <a href="#" class="project-card" data-num="02">
         <span class="project-tag">Electronics and CAD</span>
         <h3 class="project-title">Combat Robot Creation</h3>
         <p class="project-desc">Designed and wired a tournament capable combat robot from the group up with my suitemate. Operational stripping, series battery configuration, brushless motor to ESC communication - with three-phase wiring and positive-rail switching.</p>
-        <span class="unfinished-project-link">View the process →</span>
+        <span class="project-link">View the process →</span>
       </a>
  
-      <a href="#" class="unfinished-project-card" data-num="03">
-        <span class="project-tag">Nuclear Simulation</span>
-        <h3 class="project-title">Monte Carlo</h3>
-        <p class="project-desc">[MCNP & OpenMC merger for fast neutron simulation in tokamak internals]</p>
-        <span class="unfinished-project-link">Run the simulation [coming soon ; ETA end-of-year] →</span>
+      <a href="#" class="project-card" data-num="03">
+        <span class="project-tag">Data Engineering</span>
+        <h3 class="project-title">Python Data Pipeline Development</h3>
+        <p class="project-desc">Developed a Python/pandas csv pipeline for processing large data sets into readable summaries to detect trends and outliers.</p>
+        <span class="project-link">View the writeup →</span>
       </a>
  
-      <a href="#" class="unfinished-project-card" data-num="04">
+      <a href="#" class="project-card" data-num="04">
         <span class="project-tag">Video Editing</span>
-        <h3 class="project-title">DaVinci Visual Node Creation</h3>
+        <h3 class="project-title">DaVinci Video Editing</h3>
         <p class="project-desc">Designing and ordering custom-made visual nodes in a professional software workspace to build complex compositing and motion graphics pipelines.</p>
-        <span class="unfinished-project-link">Learn more →</span>
+        <span class="project-link">Learn more →</span>
       </a>
  
       <a href="proj5.html" class="project-card" data-num="05">
@@ -808,6 +866,31 @@
         <span class="project-link">View the code →</span>
       </a>
  
+    </div>
+  </section>
+
+  <!-- UPCOMING PROJECTS -->
+  <section id="upcoming">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2 class="section-title">Upcoming Projects</h2>
+    </div>
+    <div class="upcoming-grid">
+
+      <div class="upcoming-card">
+        <span class="upcoming-tag">Coding</span>
+        <h3 class="upcoming-title">Handmade Lossless File Compression</h3>
+        <p class="upcoming-desc">A lossless file compression algorithm written in Python, with hopes of allowing it to compress all file types.</p>
+        <p class="upcoming-eta">ETA: DEC 2026</p>
+      </div>
+
+      <div class="upcoming-card">
+        <span class="upcoming-tag">Nuclear Simulation</span>
+        <h3 class="upcoming-title">Monte Carlo</h3>
+        <p class="upcoming-desc">[MCNP & OpenMC merger for fast neutron simulation in tokamak internals]</p>
+        <p class="upcoming-eta">ETA: MAY 2027</p>
+      </div>
+
     </div>
   </section>
  
