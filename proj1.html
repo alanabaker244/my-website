@@ -153,7 +153,7 @@
     #findings { border-bottom: 1px solid var(--border); }
     .findings-header { padding: 3rem 3rem 2rem; }
     .finding-row { border-top: 1px solid var(--border); cursor: pointer; transition: background 0.2s; }
-    .finding-row:hover { background: rgba(126,203,106,0.03); }
+    .finding-row:hover { background: rgba(117, 200, 96, 0.03); }
     .finding-row-head { display: grid; grid-template-columns: 4rem 1fr auto; align-items: center; gap: 1.5rem; padding: 1.4rem 3rem; }
     .finding-index { font-family: 'Syne', sans-serif; font-size: 0.65rem; font-weight: 800; color: var(--green2); letter-spacing: 0.1em; }
     .finding-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1rem; color: #fff; }
@@ -356,10 +356,10 @@
       <div class="section-tag">01 ; Abstract</div>
       <h2>What We Can See</h2>
       <div class="abstract-text">
-        <p>Beta decay theory predicts a ideal, smooth, and broad spectrum. Detector data, especially from scintillators, show us something else entirely, bent and reshaped by the non-nuclear physics of our world.</p>
-        <p>This report describes to us how a CsI scintillation detector modifies the observed beta spectrum of a clean Sr90 chain source, and whether a detector response model can adequately bridge first-principles theory and experimental measurement as successfully as the standard practice of known-source correction.</p>
-        <p>Overall, it appears so, but the detector effects are dramatic. The unmodified spectrum observed is determined almost entirely by detector physics instead of nuclear physics. 
-        <p>Primarily, three mechanisms can explain the discrepancy: finite energy resolution, incomplete energy deposition, and a sharp efficiency rolloff above ~514 keV. A semi-empirical model considering all three mechanisms into the free parameters achieves χ²ν = 2.49 over the range 20–1200 keV.</p>
+        <p>Beta decay theory would predict our sample to have an ideal smooth and broad spectrum. However, our scintillator detector data shows us something completely different. Why?</p>
+        <p>This report describes the behavior of our CsI detector, including how it modifies the ideal beta spectrum of our Sr90 chain source, and tests whether a detector response model can adequately connect our first-principles theory and our experimentally measured data as successfully as the standard practice of known-source correction.</p>
+        <p>Overall, it appears so, but the detector effects on the curve are drastic. The traits of the  experimental curve are determined almost entirely by detector physics over nuclear. </p>
+        <p>Three attributes of the detector account for most of the discrepancy, being a finite energy resolution, incomplete energy deposition, and an efficiency rolloff above ~514keV. A semi-empirical model that can account for these three attributes in its parameters achieves a χ²ν = 2.49 over 20–1200 keV.</p>
       </div>
     </div>
   </section>
@@ -376,7 +376,7 @@
         <span class="finding-title">The detector dominates the spectrum shape</span>
         <span class="finding-toggle">+</span>
       </div>
-      <div class="finding-body"><div class="finding-body-inner">Without any corrections to account for the detector, theory predicts a very broad peak starting near 700 keV extending out to 2280 keV. The experimental data actually has a narrow peak at 150–200 keV with rapid falloff. This behavior can be explained through detector phenomena, but an analyst unaware of these effects could draw conclusions about isotope identity or activity that are nearly irrelevant to the actual sample.</div></div>
+      <div class="finding-body"><div class="finding-body-inner">Without any correction to account for the detector, theory predicts a very broad peak from the beginning to around 600keV, with a tail that extends to to 2280keV. When we observe the data, we see a very narrow peak at 150-300keV followed by a rapid falloff. This can be explained through detector phenomena, but an analyst unaware of these effects could draw conclusions about isotope identity or activity that are almost entirely irrelevant to the actual sample.</div></div>
     </div>
     <div class="finding-row" onclick="toggleFinding(this)">
       <div class="finding-row-head">
