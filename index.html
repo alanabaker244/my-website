@@ -190,7 +190,8 @@
       background: var(--moss);
       overflow: hidden;
       display: flex;
-      align-items: flex-end;
+      flex-wrap: wrap-reverse;
+      gap: 2rem;
       justify-content: flex-start;
       padding: 3rem;
     }
@@ -211,6 +212,8 @@
       display: flex;
       flex-direction: column;
       gap: 1.5rem;
+      order: 1;
+      margin-top: auto;
     }
  
     .hero-stat {
@@ -237,29 +240,28 @@
     .plant-deco {
       position: absolute;
       right: -20px;
-      top: -10px;
-      width: 340px;
+      top: 10px;
+      width: 20rem;
       opacity: 0.18;
     }
-
+ 
     /* ── HERO PHOTO ── */
 
     .hero-photo {
-      width: 300px;
+      width: clamp(90px, 20vw, 20.5em);
+      max-width: 100%;
       border: 3px solid var(--lichen);
       object-fit: cover;
       box-shadow: 0 8px 32px rgba(0,0,0,0.35);
       display: block;
     }
 
-    .hero-photo-wrap {      
-      --photo-right:  2rem;
-      --photo-bottom: 3rem;
-
-      position: absolute;
-      right:   var(--photo-right);
-      bottom:  var(--photo-bottom);
-      z-index: 2;
+    .hero-photo-wrap {
+        order: 2;      
+        z-index: 2;
+        margin-left: auto;
+        margin-right: 0;
+        align-self: flex-start;
     }
 
     .hero-photo-caption {
@@ -643,7 +645,7 @@
       #hero { grid-template-columns: 1fr; }
       .hero-right { min-height: 260px; }
       .hero-left { padding: 3rem 1.5rem; }
-      .hero-photo { width: 12f0px }
+      .hero-photo { width: 120px }
       #about { grid-template-columns: 1fr; }
       .about-left { border-right: none; border-bottom: 2px solid var(--stone); padding: 3rem 1.5rem; }
       .about-right { padding: 3rem 1.5rem; }
