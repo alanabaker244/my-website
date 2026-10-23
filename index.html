@@ -1002,9 +1002,11 @@
   </footer>
 
   <script>
-    function runCaptcha() {
+    function runCaptcha(tries) {
+      tries = tries || 0;
       if (typeof grecaptcha === 'undefined') {
-        setTimeout(runCaptcha, 100);
+        if (tries > 50) { document.getElementById('captcha-gate').style.display = 'none'; return; }
+        setTimeout(function () { runCaptcha(tries + 1); }, 100);
         return;
       }
       grecaptcha.ready(function () {
